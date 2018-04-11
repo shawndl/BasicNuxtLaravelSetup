@@ -12,6 +12,5 @@
 */
 
 Route::get('/', function () {
-    dd(config('app.endpoint'));
     return view('welcome');
 });
