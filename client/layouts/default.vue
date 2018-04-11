@@ -12,12 +12,13 @@
 
 <script>
   import TopNavBar from './partials/header/TopNavBar';
-  import Messages from './partials/header/Messages'
-    export default {
-        components: {
-            TopNavBar, Messages
-        }
-    }
+  import Messages from '../components/functionality/communication/Messages.vue';
+
+  export default {
+      components: {
+          TopNavBar, Messages
+      }
+  }
 </script>
 
 <style>

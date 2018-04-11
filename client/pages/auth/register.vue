@@ -1,6 +1,6 @@
 <template>
     <div class="center-screen">
-        <b-card header="Login Form"
+        <b-card header="Sign Up"
                 header-text-variant="dark"
                 header-tag="header"
                 header-bg-variant="light"
@@ -88,18 +88,12 @@
              */
             async onSubmit(event) {
                 event.preventDefault();
-                await this.$axios.post('Auth/register', this.form);
+//                await this.$auth.register({
+//                    data: this.form
+//                });
+                await this.$axios.post('auth/register', this.form);
 
-                await this.$auth.login({
-                    data: {
-                        email: this.form.email,
-                        password: this.form.password
-                    }
-                });
-
-                this.$router.push({
-                    name: 'index'
-                });
+                this.$router.push('/');
             }
         }
     }

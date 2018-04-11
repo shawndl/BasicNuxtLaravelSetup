@@ -17,7 +17,7 @@ Route::middleware('Auth:api')->get('/User', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['namespace' => 'Auth', 'prefix' => 'Auth'], function(){
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
    Route::post('register', 'RegisterController@register')
        ->middleware(['guest.api'])
        ->name('register');
@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'Auth'], function(){
         ->middleware(['Auth:api'])
         ->name('me');
     Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
-        ->middleware(['confirmation_token.expired', 'guest.api'])
+//        ->middleware(['confirmation_token.expired', 'guest.api'])
         ->name('activate');
 });
 
@@ -50,13 +50,18 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::get('{location}/show', 'LocationTypeController@show')->name('show');
 });
 
-Route::group(['prefix' => 'Profile', 'as' => 'profile.', 'namespace' => 'Profile', 'middleware' => 'Auth:api'], function(){
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile', 'middleware' => 'Auth:api'], function(){
     Route::post('', 'ProfileController@store')->name('update');
     Route::post('password', 'PasswordController@store')->name('password');
 });
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin'], function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => 'auth.admin'], function(){
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function(){
+        Route::get('', 'AdminUserController@index')->name('index');
+        Route::post('admin-access', 'AdminAccessController@store')->name('index');
+        Route::get('{user}/show', 'AdminUserController@show')->name('show');
+    });
     Route::group(['prefix' => 'location-types', 'as' => 'locationTypes.'], function(){
         Route::post('', 'AdminLocationTypeController@store')->name('store');
         Route::put('{locationType}', 'AdminLocationTypeController@update')->name('update');

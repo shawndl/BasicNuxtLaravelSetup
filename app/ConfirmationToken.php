@@ -2,12 +2,12 @@
 
 namespace App;
 
-use App\Traits\Models\HasUser;
+use App\Traits\Models\HasUserTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class ConfirmationToken extends Model
 {
-    use HasUser;
+    use HasUserTrait;
 
     public $timestamps = false;
 

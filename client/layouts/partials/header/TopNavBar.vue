@@ -22,8 +22,8 @@
                     <b-dropdown-item @click.prevent="logout">Sign Out</b-dropdown-item>
                 </b-nav-item-dropdown>
                 <b-navbar-nav v-else>
-                    <b-nav-item :to="{ name: 'Auth-login' }">Log In</b-nav-item>
-                    <b-nav-item :to="{ name: 'Auth-register' }">Register</b-nav-item>
+                    <b-nav-item to="/auth/login">Log In</b-nav-item>
+                    <b-nav-item to="/auth/register">Register</b-nav-item>
                 </b-navbar-nav>
             </b-navbar-nav>
         </b-collapse>

@@ -37,7 +37,7 @@ trait JsonResponseTrait
         if(App::environment(['local', 'staging']))
         {
             return response()->json([
-                'error' => $exception->getMessage()
+                'error' => $exception->getMessage() . 'in ' . $exception->getFile() . ' on line ' .$exception->getLine()
             ], 500);
         }
         return $this->hasJsonError('Sorry an error occurred, Please try again',
@@ -56,5 +56,19 @@ trait JsonResponseTrait
         return response()->json([
             'message' => $message
         ], $status);
+    }
+
+    /**
+     * returns a success message
+     *
+     * @param $message
+     * @param int $status
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function successResponse($message, $status = 200)
+    {
+        return response()->json([
+            'success' => $message
+        ], 201);
     }
 }

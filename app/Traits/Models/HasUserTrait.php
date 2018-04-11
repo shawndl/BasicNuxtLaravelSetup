@@ -11,7 +11,7 @@ namespace App\Traits\Models;
 
 use App\User;
 
-trait HasUser
+trait HasUserTrait
 {
     /**
      * the model has a single User

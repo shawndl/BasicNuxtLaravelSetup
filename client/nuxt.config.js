@@ -36,17 +36,17 @@ module.exports = {
   auth: {
       endpoints: {
           login: {
-              url: '/Auth/login', method: 'post', propertyName: 'meta.token'
+              url: '/auth/login', method: 'post', propertyName: 'meta.token'
           },
           user: {
-              url: '/Auth/me', method: 'get', propertyName: 'data'
+              url: '/auth/me', method: 'get', propertyName: 'data'
           },
           logout: {
-              url: '/Auth/logout', method: 'post'
+              url: '/auth/logout', method: 'post'
           }
       },
       redirect: {
-          login: '/Auth/login',
+          login: '/auth/login',
           home: '/'
       }
   },

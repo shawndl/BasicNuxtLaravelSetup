@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-row class="text-center">
+        <b-row>
             <b-col>
                 <profile-side-bar></profile-side-bar>
             </b-col>
@@ -17,10 +17,6 @@
         middleware: 'auth',
         components: {
             ProfileSideBar
-        },
-
-        mounted() {
-            this.setSuccess('Good job in that thing that you did!');
         }
     }
 </script>

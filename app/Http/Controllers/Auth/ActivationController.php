@@ -7,6 +7,7 @@ use App\Traits\Controllers\JsonResponseTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ActivationController extends Controller
 {
@@ -16,10 +17,9 @@ class ActivationController extends Controller
      * activate the User account if the token matches the User
      *
      * @param ConfirmationToken $token
-     * @param Request $request
      * @return mixed
      */
-    public function activate(ConfirmationToken $token, Request $request)
+    public function activate(ConfirmationToken $token)
     {
         try {
             $user = $token->user;
@@ -27,11 +27,12 @@ class ActivationController extends Controller
             $user->save();
             $token->delete();
         } catch (\Exception $exception) {
-            return $this->processingError($exception);
+            if($exception->getMessage() !== 'Creating default object from empty value')
+            {
+                $this->processingError($exception);
+            }
         }
 
-        return response()->json([
-            'message' => 'Congratulations, your account has been activated!'
-        ], 200);
+        return $this->successResponse('Congratulations, your account has been activated!', 200);
     }
 }

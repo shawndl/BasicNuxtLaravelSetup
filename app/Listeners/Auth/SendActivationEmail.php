@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 
-class SendActivationEmail
+class SendActivationEmail implements ShouldQueue
 {
     /**
      * Handle the event.
@@ -19,6 +19,6 @@ class SendActivationEmail
     public function handle($event)
     {
         Mail::to($event->user)
-            ->send(new ActivationEmail($event->user->generateConfirmationToken(),  $event->user));
+            ->queue(new ActivationEmail($event->user->generateConfirmationToken(),  $event->user));
     }
 }

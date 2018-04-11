@@ -13,16 +13,6 @@ trait AuthorizationTrait
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function permissions()
-    {
-        return $this->belongsToMany(Permission::class, 'permission_user');
-    }
-
-    /**
-     * has many to many permissions
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user');
@@ -36,7 +26,7 @@ trait AuthorizationTrait
      */
     public function hasRole(string $role)
     {
-        return $this->roles->contains('name', strtolower($role));
+        return $this->roles->contains('name', ucwords($role));
     }
 
     /**
@@ -55,28 +45,5 @@ trait AuthorizationTrait
             }
         }
         return false;
-    }
-
-    /**
-     * does the user have permission to
-     *
-     * @retun boolean
-     * @param $permission
-     * @return bool
-     */
-    public function hasPermissionTo($permission)
-    {
-        return $this->hasPermission($permission);
-    }
-
-    /**
-     * is the permission attached to a user 
-     * 
-     * @param $permission
-     * @return bool
-     */
-    protected function hasPermission($permission)
-    {
-        return (boolean) $this->permissions->where('name', $permission)->count();
     }
 }

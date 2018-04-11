@@ -40,8 +40,10 @@
 </template>
 
 <script>
+    import AbstractForm from '../../components/abstract/AbstractForm.vue';
     export default {
         middleware: 'guest',
+        extends: AbstractForm,
         data : function() {
             return {
                 form: {
@@ -52,10 +54,6 @@
         },
 
         methods: {
-            isEmpty(value) {
-                return (value === undefined) ? value : false;
-            },
-
             /**
              * submit form
              * @param event

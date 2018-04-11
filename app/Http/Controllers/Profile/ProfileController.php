@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     use JsonResponseTrait;
     /**
-     * updates the users Profile
+     * updates the index Profile
      *
      * @param ProfileStoreRequest $request
      * @return JsonResponse
@@ -26,8 +26,6 @@ class ProfileController extends Controller
             return $this->processingError($exception);
         }
 
-        return response()->json([
-           'message' => 'Your Profile has been updated!'
-        ]);
+        return $this->successResponse('Your Profile has been updated!');
     }
 }

@@ -42,7 +42,7 @@ class RegisterUserTest extends TestCase
     public function a_successful_registration_must_must_add_a_user_to_the_database()
     {
         $this->assertEquals(1, User::count());
-        $this->assertDatabaseHas('users', [
+        $this->assertDatabaseHas('index', [
             'name' => strtolower($this->post['name'])
         ]);
     }

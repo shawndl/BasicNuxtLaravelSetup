@@ -281,7 +281,7 @@ return [
         | Authentication Provider
         |--------------------------------------------------------------------------
         |
-        | Specify the provider that is used to authenticate users.
+        | Specify the provider that is used to authenticate index.
         |
         */
 

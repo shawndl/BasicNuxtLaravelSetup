@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\ConfirmationToken;
+use App\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
@@ -26,7 +27,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        Route::model('confirmation_token', ConfirmationToken::class);
+        Route::bind('confirmation_token', function($token){
+            return ConfirmationToken::where('token', $token)->first();
+        });
+        Route::bind('user', function($name){
+            return User::where('name', strtolower($name))->first();
+        });
     }
 
     /**

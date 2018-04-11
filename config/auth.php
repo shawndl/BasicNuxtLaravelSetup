@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'api',
-        'passwords' => 'users',
+        'passwords' => 'index',
     ],
 
     /*
@@ -28,7 +28,7 @@ return [
     | here which uses session storage and the Eloquent User provider.
     |
     | All authentication drivers have a User provider. This defines how the
-    | users are actually retrieved out of your database or other storage
+    | index are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your User's data.
     |
     | Supported: "session", "token"
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'index',
         ],
 
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'index',
         ],
     ],
 
@@ -53,7 +53,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a User provider. This defines how the
-    | users are actually retrieved out of your database or other storage
+    | index are actually retrieved out of your database or other storage
     | mechanisms used by this application to persist your User's data.
     |
     | If you have multiple User tables or Models you may configure multiple
@@ -65,14 +65,14 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'index' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
 
-        // 'users' => [
+        // 'index' => [
         //     'driver' => 'database',
-        //     'table' => 'users',
+        //     'table' => 'index',
         // ],
     ],
 
@@ -92,8 +92,8 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'index' => [
+            'provider' => 'index',
             'table' => 'password_resets',
             'expire' => 60,
         ],

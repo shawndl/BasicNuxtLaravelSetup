@@ -18,8 +18,6 @@ class UserAuthorizationTest extends TestCase
         parent::setUp();
         $user = create(User::class);
         $user->roles()->attach(create(Role::class, ['name' => 'admin']));
-        $user->permissions()->attach(create(Permission::class, ['name' => 'access_admin']));
-
     }
 
     /**
@@ -31,17 +29,6 @@ class UserAuthorizationTest extends TestCase
     public function a_user_can_have_a_role()
     {
         $this->assertCount(1, User::first()->roles);
-    }
-
-    /**
-     * @group integration
-     * @group model
-     * @group permission
-     * @test
-     */
-    public function a_user_can_have_a_permission()
-    {
-        $this->assertCount(1, User::first()->permissions);
     }
 
     /**

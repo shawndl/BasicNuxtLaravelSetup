@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'endpoint' => env('END_POINT', 'http://localhost:3000/'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -158,8 +160,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-//        App\Providers\PermissionServiceProvider::class
+        App\Providers\RouteServiceProvider::class
 
     ],
 

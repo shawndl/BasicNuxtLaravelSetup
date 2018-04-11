@@ -13,6 +13,13 @@ class RegisterController extends Controller
 {
     use JsonResponseTrait;
 
+    /**
+     * registers a user
+     *
+     * @param RegisterUserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(RegisterUserRequest $request, User $user)
     {
         try {
@@ -24,13 +31,11 @@ class RegisterController extends Controller
 
             event(new UserSignedUp($user));
         } catch (\Exception $exception) {
-            dd($exception->getMessage(), $exception->getFile(), $exception->getLine());
-            return $this->processingError($exception);
+            return response()->json([$exception->getMessage()]);
+            // return $this->processingError($exception);
         }
 
 
-        return response()->json([
-            'message' => 'Your registration is successful, please check your email to activate your account!'
-        ], 201);
+        return $this->successResponse('Your registration is successful, please check your email to activate your account!', 201);
     }
 }

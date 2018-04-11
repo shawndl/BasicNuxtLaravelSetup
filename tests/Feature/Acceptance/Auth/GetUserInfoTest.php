@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Acceptance\Auth;
 
+use App\Permission;
+use App\Role;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -9,6 +11,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class GetUserInfoTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp()
+    {
+        parent::setUp();
+    }
 
     /**
      * @group acceptance
@@ -23,7 +30,29 @@ class GetUserInfoTest extends TestCase
             'data' => [
                 'id' => $user->id,
                 'name' => $user->name,
-                'email' => $user->email
+                'email' => $user->email,
+                'is_admin' => false
+            ]
+        ]);
+    }
+
+
+    /**
+     * @group acceptance
+     * @group Auth
+     * @test
+     */
+    public function the_me_route_must_be_able_to_return_if_the_user_has_admin_access()
+    {
+        $user = create(User::class);
+        $user->roles()->attach(create(Role::class, ['name' => 'admin']));
+
+        $this->signIn($user)->json('get', route('me'))->assertJson([
+            'data' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'is_admin' => true
             ]
         ]);
     }

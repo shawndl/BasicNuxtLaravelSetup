@@ -12,7 +12,8 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapActions } from 'vuex';
+    import FadeOutAnimation from '../animations/FadeOutAnimation.vue'
 
     export default {
 
@@ -23,6 +24,10 @@
                 type: null,
                 title: null
             }
+        },
+
+        components: {
+            FadeOutAnimation
         },
 
         computed: {
@@ -57,6 +62,9 @@
         },
 
         methods: {
+            ...mapActions({
+                clearMessages: 'messages/clearMessages'
+            }),
 
             /**
              * opens the message
@@ -64,7 +72,7 @@
              */
             open() {
                 this.showMessage = true;
-                setTimeout(() => this.showMessage = false, 5000);
+                setTimeout(() => this.closeMessage(), 5000);
             },
 
             /**
@@ -95,6 +103,15 @@
                 this.type = 'danger';
                 this.title = 'Error';
                 this.open();
+            },
+
+            /**
+             * closes the message box after five seconds and clears messages
+             * @return void
+             */
+            closeMessage() {
+                this.showMessage = false;
+                this.clearMessages();
             }
         }
     }
