@@ -21,7 +21,7 @@ class CreateConfirmationTokensTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('index')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }

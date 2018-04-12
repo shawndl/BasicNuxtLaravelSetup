@@ -27,6 +27,7 @@ class ActivateAccountTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
+
         $user = make(User::class, ['name' => 'joesmith', 'is_active' => false])->toArray();
         $user['password'] = 'secret';
         $user['password_confirmation'] = 'secret';
@@ -59,7 +60,7 @@ class ActivateAccountTest extends TestCase
     public function a_confirmation_message_must_be_sent_back_to_the_browser()
     {
         $this->response->assertJson([
-            'message' => 'Congratulations, your account has been activated!'
+            'success' => 'Congratulations, your account has been activated!'
         ]);
     }
 }

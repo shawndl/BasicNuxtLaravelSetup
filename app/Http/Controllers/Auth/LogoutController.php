@@ -22,6 +22,7 @@ class LogoutController extends Controller
         try {
             auth()->logout();
         } catch (\Exception $exception) {
+            // dd($exception->getMessage(), $exception->getLine(), $exception->getFile());
             return $this->processingError($exception);
         }
 

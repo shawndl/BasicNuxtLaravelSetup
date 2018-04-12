@@ -30,7 +30,7 @@ class CreateLocationsTable extends Migration
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('index')
+                ->on('users')
                 ->cascade('delete');
         });
     }

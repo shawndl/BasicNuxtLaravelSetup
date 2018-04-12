@@ -42,7 +42,7 @@ class RegisterUserTest extends TestCase
     public function a_successful_registration_must_must_add_a_user_to_the_database()
     {
         $this->assertEquals(1, User::count());
-        $this->assertDatabaseHas('index', [
+        $this->assertDatabaseHas('users', [
             'name' => strtolower($this->post['name'])
         ]);
     }
@@ -56,7 +56,7 @@ class RegisterUserTest extends TestCase
     {
         $this->response->assertStatus(201)
             ->assertJson([
-                "message" => "Your registration is successful, please check your email to activate your account!"
+                "success" => "Your registration is successful, please check your email to activate your account!"
             ]);
     }
 

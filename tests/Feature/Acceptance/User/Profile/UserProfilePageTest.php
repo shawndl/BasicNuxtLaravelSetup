@@ -38,7 +38,7 @@ class UserProfilePageTest extends TestCase
             'name' => 'new',
             'email' => 'new@gmail.com'
         ])->assertStatus(200)->assertJson([
-            'message' => 'Your Profile has been updated!'
+            'success' => 'Your Profile has been updated!'
         ]);
         $this->assertEquals('Happy', $user->fresh()->name);
     }

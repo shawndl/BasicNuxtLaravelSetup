@@ -29,7 +29,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
         ->middleware(['Auth:api'])
         ->name('me');
     Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
-//        ->middleware(['confirmation_token.expired', 'guest.api'])
+        ->middleware(['confirmation_token.expired', 'guest.api'])
         ->name('activate');
 });
 
@@ -46,8 +46,8 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     /**
      * Displays Location Type Information
      */
-    Route::get('', 'LocationTypeController@index')->name('index');
-    Route::get('{location}/show', 'LocationTypeController@show')->name('show');
+    Route::get('types/', 'LocationTypeController@index')->name('index');
+    Route::get('types/{location}/show', 'LocationTypeController@show')->name('show');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile', 'middleware' => 'Auth:api'], function(){
@@ -56,10 +56,10 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile
 });
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => 'auth.admin'], function(){
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['Auth:api', 'auth.admin']], function(){
     Route::group(['prefix' => 'user', 'as' => 'user.'], function(){
         Route::get('', 'AdminUserController@index')->name('index');
-        Route::post('admin-access', 'AdminAccessController@store')->name('index');
+        Route::post('admin-access', 'AdminAccessController@store')->name('access');
         Route::get('{user}/show', 'AdminUserController@show')->name('show');
     });
     Route::group(['prefix' => 'location-types', 'as' => 'locationTypes.'], function(){

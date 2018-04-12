@@ -32,9 +32,9 @@ trait JsonResponseTrait
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function processingError(\Exception $exception)
+    protected function processingError(\Exception $exception = null)
     {
-        if(App::environment(['local', 'staging']))
+        if(App::environment(['local', 'staging']) && !is_null($exception))
         {
             return response()->json([
                 'error' => $exception->getMessage() . 'in ' . $exception->getFile() . ' on line ' .$exception->getLine()
@@ -69,6 +69,6 @@ trait JsonResponseTrait
     {
         return response()->json([
             'success' => $message
-        ], 201);
+        ], $status);
     }
 }

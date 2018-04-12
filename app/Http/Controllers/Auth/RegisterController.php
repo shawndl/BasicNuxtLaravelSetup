@@ -31,8 +31,7 @@ class RegisterController extends Controller
 
             event(new UserSignedUp($user));
         } catch (\Exception $exception) {
-            return response()->json([$exception->getMessage()]);
-            // return $this->processingError($exception);
+            return $this->processingError($exception);
         }
 
 

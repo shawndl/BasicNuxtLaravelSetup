@@ -17,7 +17,7 @@
              */
             async verifyToken(token) {
                 this.$axios.$get('auth/activate/' +  token)
-                    .then(response => this.$router.push('login'))
+                    .then(response => this.$router.push('/auth/login'))
                     .catch(error => console.log(error));
             }
         }

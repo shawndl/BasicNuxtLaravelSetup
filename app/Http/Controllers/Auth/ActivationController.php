@@ -25,7 +25,7 @@ class ActivationController extends Controller
             $user = $token->user;
             $user->is_active = true;
             $user->save();
-            $token->delete();
+            //$token->delete();
         } catch (\Exception $exception) {
             if($exception->getMessage() !== 'Creating default object from empty value')
             {
