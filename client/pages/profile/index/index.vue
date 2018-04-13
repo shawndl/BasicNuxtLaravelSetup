@@ -33,6 +33,7 @@
                             <b-form-input id="email"
                                           type="email"
                                           name="email"
+                                          :state="isEmpty(errors.email)"
                                           v-model="form.email"
                                           placeholder="Please enter your email!"
                                           required>

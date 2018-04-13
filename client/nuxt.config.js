@@ -61,13 +61,16 @@ module.exports = {
         './plugins/mixins/User.js',
         './plugins/mixins/validation.js',
         './plugins/axios.js',
-        './plugins/mixins/messages.js'
+        './plugins/mixins/messages.js',
+        './plugins/mixins/googlemaps.js',
+        './plugins/vue-cropper.js'
     ],
 
   /*
   ** Build configuration
   */
   build: {
+      vendor: ['vuejs-datepicker', 'vue-image-crop-upload'],
     /*
     ** Run ESLint on save
     */

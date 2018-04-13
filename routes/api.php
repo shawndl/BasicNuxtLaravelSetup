@@ -46,8 +46,8 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     /**
      * Displays Location Type Information
      */
-    Route::get('types/', 'LocationTypeController@index')->name('index');
-    Route::get('types/{location}/show', 'LocationTypeController@show')->name('show');
+    Route::get('types/', 'LocationTypeController@index')->name('type.index');
+    Route::get('types/{locationType}/show', 'LocationTypeController@show')->name('type.show');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile', 'middleware' => 'Auth:api'], function(){
@@ -62,9 +62,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('admin-access', 'AdminAccessController@store')->name('access');
         Route::get('{user}/show', 'AdminUserController@show')->name('show');
     });
-    Route::group(['prefix' => 'location-types', 'as' => 'locationTypes.'], function(){
-        Route::post('', 'AdminLocationTypeController@store')->name('store');
-        Route::put('{locationType}', 'AdminLocationTypeController@update')->name('update');
+    Route::group(['prefix' => 'location-types', 'as' => 'location.'], function(){
+        Route::post('', 'AdminLocationTypeController@store')->name('type.store');
+        Route::put('{locationType}', 'AdminLocationTypeController@update')->name('type.update');
+        Route::delete('{locationType}', 'AdminLocationTypeController@destroy')->name('type.delete');
     });
 
 });

@@ -9,6 +9,7 @@
 
             <b-navbar-nav>
                 <b-nav-item to="/locations">Locations</b-nav-item>
+                <b-nav-item v-if="authenticated && user.is_admin" to="/admin">Admin</b-nav-item>
             </b-navbar-nav>
 
             <!-- Right aligned nav items -->

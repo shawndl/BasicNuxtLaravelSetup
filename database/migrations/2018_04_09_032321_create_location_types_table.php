@@ -16,6 +16,7 @@ class CreateLocationTypesTable extends Migration
         Schema::create('location_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index();
+            $table->text('description');
             $table->date('season_start');
             $table->date('season_finish');
             $table->timestamps();

@@ -12,6 +12,11 @@
 */
 
 Route::get('/', function () {
-    
+    $a = \App\Image::first();
+    dd($a->path);
+//    factory(\App\LocationType::class, 10)->create();
+//    factory(\App\Role::class)->create(['name' => 'admin']);
+//    factory(\App\User::class)->create(['email' => 'test@gmail.com', 'password' => bcrypt('aaaaaa')]);
+
     return view('welcome');
 });
