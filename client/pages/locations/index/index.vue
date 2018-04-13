@@ -150,15 +150,15 @@
         methods: {
             aroundUser() {
                 if (navigator.geolocation) {
-                    let self = this;
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        console.log(position);
-//                        self.zoom = 5;
-//                        self.position = {
-//                            lat: position.coords.latitude,
-//                            lng: position.coords.longitude
-//                        };
+                    navigator.geolocation.getCurrentPosition((position) => {
+                        this.zoom = 5;
+                        this.position = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
 
+                    }, error => {
+                        console.log(error);
                     });
                 }
             }

@@ -59,9 +59,10 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['Auth:api', 'auth.admin']], function(){
     Route::group(['prefix' => 'user', 'as' => 'user.'], function(){
         Route::get('', 'AdminUserController@index')->name('index');
-        Route::post('admin-access', 'AdminAccessController@store')->name('access');
+        Route::post('admin-access', 'AdminAccessController@store')->name('access')->middleware('auth');
         Route::get('{user}/show', 'AdminUserController@show')->name('show');
     });
+
     Route::group(['prefix' => 'location-types', 'as' => 'location.'], function(){
         Route::post('', 'AdminLocationTypeController@store')->name('type.store');
         Route::put('{locationType}', 'AdminLocationTypeController@update')->name('type.update');
