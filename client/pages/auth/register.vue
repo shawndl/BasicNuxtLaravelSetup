@@ -93,6 +93,13 @@
 //                });
                 await this.$axios.post('auth/register', this.form);
 
+                await this.$auth.login({
+                    data: {
+                        email: this.form.email,
+                        password: this.form.password
+                    }
+                });
+
                 this.$router.push('/');
             }
         }

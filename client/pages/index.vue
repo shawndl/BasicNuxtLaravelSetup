@@ -1,17 +1,7 @@
 <template>
     <div>
         Home Page
+
+        Content goes here
     </div>
 </template>
-
-<script>
-export default {
-  components: {
-
-  }
-}
-</script>
-
-<style>
-
-</style>

@@ -23,14 +23,15 @@ module.exports = {
    */
   modules: [
       '@nuxtjs/axios',
-      '@nuxtjs/Auth',
+      '@nuxtjs/auth',
       'bootstrap-vue/nuxt',
 
       ['bootstrap-vue/nuxt', { css: false }],
   ],
 
   axios: {
-    baseURL: 'http://foragingapplication.test/api'
+      // baseURL: 'http://foragingapplication.test/api'
+      baseURL: 'https://frozen-temple-33483.herokuapp.com/api'
   },
 
   auth: {
@@ -58,7 +59,7 @@ module.exports = {
     },
 
     plugins: [
-        './plugins/mixins/User.js',
+        './plugins/mixins/user.js',
         './plugins/mixins/validation.js',
         './plugins/axios.js',
         './plugins/mixins/messages.js',

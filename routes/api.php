@@ -13,24 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('Auth:api')->get('/User', function (Request $request) {
-    return $request->user();
-});
-
 Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
    Route::post('register', 'RegisterController@register')
        ->middleware(['guest.api'])
        ->name('register');
     Route::post('login', 'LoginController@login')
-        ->middleware(['guest.api', 'user.confirmed'])
+        ->middleware(['guest.api'])
         ->name('login');
     Route::post('/logout', 'LogoutController@logout')->name('logout');
     Route::get('/me', 'MeController@me')
         ->middleware(['Auth:api'])
         ->name('me');
-    Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
-        ->middleware(['confirmation_token.expired', 'guest.api'])
-        ->name('activate');
+//    Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
+//        ->middleware(['confirmation_token.expired', 'guest.api'])
+//        ->name('activate');
 });
 
 

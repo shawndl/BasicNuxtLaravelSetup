@@ -26,15 +26,16 @@ class RegisterController extends Controller
             $user = $user->create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'is_active' => true,
                 'password' => bcrypt($request->password),
             ]);
 
-            event(new UserSignedUp($user));
+            // event(new UserSignedUp($user));
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
 
 
-        return $this->successResponse('Your registration is successful, please check your email to activate your account!', 201);
+        return $this->successResponse('Your registration is successful!', 201);
     }
 }
