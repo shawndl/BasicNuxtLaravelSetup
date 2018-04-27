@@ -19,6 +19,8 @@ class CreateLocationTypesTable extends Migration
             $table->text('description');
             $table->date('season_start');
             $table->date('season_finish');
+            $table->string('icon')->default('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

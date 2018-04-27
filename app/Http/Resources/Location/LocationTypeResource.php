@@ -14,12 +14,23 @@ class LocationTypeResource extends JsonResource
      */
     public function toArray($request)
     {
+        $image = $this->whenLoaded('image');
+        $encyclopedia = $this->whenLoaded('encyclopedia');
         return [
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
-            'start' => $this->season_start->format('jS M'),
-            'end' => $this->season_finish->format('jS M')
+            'start' => $this->season_start,
+            'start_format' => $this->season_start->format('jS M'),
+            'end' => $this->season_finish,
+            'end_format' => $this->season_finish->format('jS M'),
+            'icon' => $this->icon,
+            'image' => $this->when(isset($image->id), function() use ($image) {
+                return $image->path;
+            }),
+            'encyclopedia' => $this->when($encyclopedia->count() > 0, function() use ($encyclopedia) {
+                return EncylopediaResource::collection(($encyclopedia));
+            })
         ];
     }
 }

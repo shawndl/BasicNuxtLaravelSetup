@@ -56,7 +56,7 @@ class RegisterUserTest extends TestCase
     {
         $this->response->assertStatus(201)
             ->assertJson([
-                "success" => "Your registration is successful, please check your email to activate your account!"
+                "success" => "Your registration is successful.  Please check your email to activate your account."
             ]);
     }
 

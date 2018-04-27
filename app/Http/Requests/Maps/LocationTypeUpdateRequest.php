@@ -3,8 +3,9 @@
 namespace App\Http\Requests\Maps;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class LocationTypeRequest extends FormRequest
+class LocationTypeUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +24,15 @@ class LocationTypeRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('locationType')->id;
         return [
-            'name' => 'required|string|unique:location_types',
+            'name' => [
+                'required', 'string', Rule::unique('location_types')->ignore($id),
+            ],
             'description' => 'required|string',
             'start' => 'required|date',
             'end' => 'required|date|after:start',
-            'image' => 'required|image',
-            'icon' => 'required|url'
+            'image' => 'nullable|mimes:png'
         ];
     }
 }

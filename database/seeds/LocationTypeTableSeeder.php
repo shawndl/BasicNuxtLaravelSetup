@@ -11,6 +11,9 @@ class LocationTypeTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\LocationType::class, 20)->create();
+        factory(\App\LocationType::class, 20)->create()
+            ->each(function ($type) {
+                $type->addLink('https://www.google.com/', str_random(6));
+            });
     }
 }

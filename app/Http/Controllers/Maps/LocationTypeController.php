@@ -17,9 +17,8 @@ class LocationTypeController extends Controller
      */
     public function index(LocationType $type)
     {
-
         try {
-            $types = $type->all();
+            $types = $type->with('image', 'encyclopedia')->get();
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }

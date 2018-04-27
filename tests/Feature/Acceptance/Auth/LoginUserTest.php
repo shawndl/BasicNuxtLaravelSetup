@@ -30,22 +30,27 @@ class LoginUserTest extends TestCase
 
     /**
      * @group acceptance
-     * @group Auth
+     * @group auth
      * @test
      */
     public function a_user_must_be_active_to_login()
     {
         $this->sendResponse(false)
-            ->assertStatus(403)
+            ->assertStatus(422)
             ->assertJson([
-                'error' => 'Your account is not active'
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'email' => [
+                        'Your account is not active, please check your email'
+                    ]
+                ]
             ]);
         $this->assertFalse(Auth::check());
     }
 
     /**
      * @group acceptance
-     * @group Auth
+     * @group auth
      * @test
      */
     public function it_must_return_a_token_if_email_and_password_matches()
@@ -57,7 +62,7 @@ class LoginUserTest extends TestCase
 
     /**
      * @group acceptance
-     * @group Auth
+     * @group auth
      * @test
      */
     public function if_the_credentials_do_not_match_an_error_will_be_returned()
@@ -70,18 +75,32 @@ class LoginUserTest extends TestCase
     }
 
     /**
+     * @group acceptance
+     * @group auth
+     * @test
+     */
+    public function a_user_must_be_able_to_login_with_a_username()
+    {
+        $this->sendResponse(true, 'secret', true)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+            'data' => ['id', 'name', 'email'], 'meta' => ['token']
+        ]);
+    }
+
+    /**
      * sends login response
      * @param bool $active
      * @param string $password
      * @return TestResponse
      */
-    private function sendResponse($active = true, $password = 'secret')
+    private function sendResponse($active = true, $password = 'secret', $username = false)
     {
         $this->user = create(User::class, [
             'is_active' => $active,
             'password' => bcrypt('secret')
         ])->toArray();
-        $this->post['email'] = $this->user['email'];
+        $this->post['email'] = ($username) ? $this->user['name'] : $this->user['email'];
         $this->post['password'] = $password;
         $this->url = route('login');
         return $this->json('post', $this->url, $this->post);

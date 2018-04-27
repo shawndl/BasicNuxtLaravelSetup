@@ -4,7 +4,7 @@ namespace App\Http\Requests\Maps;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LocationTypeRequest extends FormRequest
+class AddEncyclopediaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,7 @@ class LocationTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|unique:location_types',
-            'description' => 'required|string',
-            'start' => 'required|date',
-            'end' => 'required|date|after:start',
-            'image' => 'required|image',
-            'icon' => 'required|url'
+            //
         ];
     }
 }

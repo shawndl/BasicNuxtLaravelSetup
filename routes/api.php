@@ -18,15 +18,21 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
        ->middleware(['guest.api'])
        ->name('register');
     Route::post('login', 'LoginController@login')
-        ->middleware(['guest.api'])
+        ->middleware(['guest.api', 'user.confirmed'])
         ->name('login');
     Route::post('/logout', 'LogoutController@logout')->name('logout');
     Route::get('/me', 'MeController@me')
         ->middleware(['Auth:api'])
         ->name('me');
-//    Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
-//        ->middleware(['confirmation_token.expired', 'guest.api'])
-//        ->name('activate');
+    Route::get('/activate/{confirmation_token}', 'ActivationController@activate')
+        ->middleware(['confirmation_token.expired', 'guest.api'])
+        ->name('activate');
+
+    Route::get('login/{service}', 'SocialLoginController@redirect')
+        ->name('login.social');
+
+    Route::get('login/{service}/callback', 'SocialLoginController@callback')
+        ->name('login.callback');
 });
 
 
@@ -37,6 +43,7 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::get('', 'LocationController@index')->name('index');
     Route::post('', 'LocationController@store')->name('store');
     Route::put('', 'LocationController@update')->name('update');
+    Route::get('/search/{search}', 'LocationController@search')->name('search');
     Route::get('{location}/show', 'LocationController@show')->name('show');
 
     /**
@@ -60,9 +67,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     Route::group(['prefix' => 'location-types', 'as' => 'location.'], function(){
-        Route::post('', 'AdminLocationTypeController@store')->name('type.store');
-        Route::put('{locationType}', 'AdminLocationTypeController@update')->name('type.update');
-        Route::delete('{locationType}', 'AdminLocationTypeController@destroy')->name('type.delete');
+        Route::post('', 'AdminLocationTypeController@store')
+            ->name('type.store');
+        Route::post('encyclopedia', 'AdminLocationTypeEncyclopediaController@remove')
+            ->name('type.encyclopedia.remove');
+        Route::post('encyclopedia\{locationType}', 'AdminLocationTypeEncyclopediaController@add')
+            ->name('type.encyclopedia.add');
+        Route::post('{locationType}', 'AdminLocationTypeController@update')
+            ->name('type.update');
+        Route::delete('{locationType}', 'AdminLocationTypeController@destroy')
+            ->name('type.delete');
     });
 
 });

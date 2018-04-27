@@ -4,7 +4,7 @@ namespace App\Http\Resources\Location;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ImageResource extends JsonResource
+class EncylopediaResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,6 +15,8 @@ class ImageResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
+            'name' => $this->name,
             'path' => $this->path
         ];
     }

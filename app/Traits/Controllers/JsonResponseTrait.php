@@ -71,4 +71,21 @@ trait JsonResponseTrait
             'success' => $message
         ], $status);
     }
+
+    /**
+     * returns an error that replicates a laravel validation error
+     *
+     * @param $message
+     * @param $field
+     * @return \Illuminate\Http\JsonResponse
+     */
+    protected function validationError($message, $field)
+    {
+        return response()->json([
+            'message' => 'The given data was invalid.',
+            'errors' => [
+                $field => [$message],
+            ]
+        ], 422);
+    }
 }

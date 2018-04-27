@@ -17,6 +17,16 @@ class Image extends Model
     }
 
     /**
+     * a location has a type
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function locationType()
+    {
+        return $this->belongsTo(LocationType::class, 'location_type_id');
+    }
+
+    /**
      * get the current instance of a string
      *
      * @param $value

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\ConfirmationToken;
+use App\Http\Resources\Auth\UserResource;
 use App\Traits\Controllers\JsonResponseTrait;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ActivationController extends Controller
 {
@@ -25,6 +28,7 @@ class ActivationController extends Controller
             $user = $token->user;
             $user->is_active = true;
             $user->save();
+            $token = JWTAuth::fromUser($user);
             //$token->delete();
         } catch (\Exception $exception) {
             if($exception->getMessage() !== 'Creating default object from empty value')
@@ -33,6 +37,12 @@ class ActivationController extends Controller
             }
         }
 
-        return $this->successResponse('Congratulations, your account has been activated!', 200);
+        return (new UserResource($user))
+            ->additional([
+                'success' => 'Congratulations, your account has been activated!',
+                'meta' => [
+                    'token' => $token
+                ]
+            ]);
     }
 }

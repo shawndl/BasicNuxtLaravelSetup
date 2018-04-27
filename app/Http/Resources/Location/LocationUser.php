@@ -15,7 +15,8 @@ class LocationUser extends JsonResource
     public function toArray($request)
     {
         return [
-            'username' => 'name'
+            'id' => $this->id,
+            'username' => $this->name
         ];
     }
 }

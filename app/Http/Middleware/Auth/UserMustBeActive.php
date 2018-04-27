@@ -34,10 +34,14 @@ class UserMustBeActive
      */
     public function handle($request, Closure $next)
     {
+        if(empty($request->email))
+        {
+            return $next($request);
+        }
         $user = $this->user->email($request->email);
         if(isset($user->id) && $user->hasNotActivated())
         {
-            return $this->hasJsonError('Your account is not active', 403);
+            return $this->validationError('Your account is not active, please check your email', 'email');
         }
 
         return $next($request);

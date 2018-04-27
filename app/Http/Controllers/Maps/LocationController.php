@@ -7,6 +7,7 @@ use App\Http\Resources\Location\LocationResource;
 use App\Image;
 use App\Location;
 use App\Traits\Controllers\JsonResponseTrait;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -16,13 +17,13 @@ class LocationController extends Controller
     use JsonResponseTrait;
 
     /**
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @param Location $locations
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection | JsonResponse
      */
     public function index(Location $locations)
     {
-
         try {
-            $locations = $locations->with('type', 'user', 'image')->get();
+            $locations = $locations->with('type.encyclopedia', 'user', 'image')->get();
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
@@ -34,15 +35,16 @@ class LocationController extends Controller
      * creates a new location
      *
      * @param LocationRequest $request
-     * @param Location $location
+     * @param Image $image
      * @return \Illuminate\Http\JsonResponse
+     * @internal param Location $location
      */
     public function store(LocationRequest $request, Image $image)
     {
         $post = $request->all();
         try {
             $path = $request->file('image')->store('public');
-            $image->create([
+            $location = $image->create([
                 'path' => $path
             ])->locations()
                 ->create([
@@ -54,9 +56,9 @@ class LocationController extends Controller
                     'longitude' => $post['longitude']
                 ]);
         } catch (\Exception $exception) {
-            $this->processingError($exception);
+            return $this->processingError($exception);
         }
 
-        return $this->successResponse('Congratulations, you just added a new location!');
+        return $this->successResponse('Congratulations, you just added a new location!', 201);
     }
 }

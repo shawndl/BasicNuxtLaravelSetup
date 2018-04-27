@@ -19,6 +19,7 @@ class LogOutTest extends TestCase
     {
         $this->signIn();
         $this->assertTrue(Auth::check());
+
         $this->json('post', route('logout'))
             ->assertStatus(200)
             ->assertJson(['message' => 'You are logged out!']);

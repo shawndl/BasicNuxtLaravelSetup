@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddImageIdToLocations extends Migration
+class AddImageIdToLocationType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddImageIdToLocations extends Migration
      */
     public function up()
     {
-        Schema::table('locations', function (Blueprint $table) {
+        Schema::table('location_types', function (Blueprint $table) {
             $table->unsignedInteger('image_id')->nullable();
 
             $table->foreign('image_id')
@@ -30,8 +30,8 @@ class AddImageIdToLocations extends Migration
      */
     public function down()
     {
-        Schema::table('locations', function (Blueprint $table) {
-            $table->dropForeign('locations_image_id_foreign');
+        Schema::table('location_types', function (Blueprint $table) {
+            $table->dropForeign('location_types_image_id_foreign');
         });
     }
 }

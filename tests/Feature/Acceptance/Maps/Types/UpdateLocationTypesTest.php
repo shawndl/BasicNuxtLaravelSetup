@@ -2,7 +2,9 @@
 
 namespace Tests\Feature\Acceptance\Maps\Types;
 
+use App\Image;
 use App\LocationType;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,6 +16,7 @@ class UpdateLocationTypesTest extends TestCase
     protected $post = [
         'name' => 'berry',
         'description' => 'A description',
+        'icon' => 'link_to_an_icon',
         'start' => 'Tue Apr 03 2018 13:48:00 GMT+1000 (AEST)',
         'end' => 'Wed Apr 11 2018 13:48:00 GMT+1000 (AEST)'
     ];
@@ -28,15 +31,54 @@ class UpdateLocationTypesTest extends TestCase
         $type = create(LocationType::class);
 
         $this->signInAdmin()
-            ->json('put', route('admin.location.type.update', [$type->id]), $this->post)
+            ->json('post', route('admin.location.type.update', [$type->id]), $this->post)
             ->assertStatus(200)
             ->assertJson([
-                'success' => 'A location type has been updated'
+                'success' => 'A location type has been updated',
+                'data' => [
+                    'id' => $type->id,
+                    'name' => 'Berry',
+                    'description'=> 'A description',
+                    'icon' => 'link_to_an_icon',
+                    'start' => [
+                        'date' => '2018-04-03 03:48:00.000000',
+                        'timezone_type' => 3,
+                        'timezone' => 'UTC'
+                    ],
+                    'start_format' => '3rd Apr',
+                    'end' => [
+                        'date' => '2018-04-11 03:48:00.000000',
+                        'timezone_type' => 3,
+                        'timezone' => 'UTC'
+                    ],
+                ]
             ]);
 
         $this->assertDatabaseHas('location_types', [
             'name' => 'berry',
             'season_start' => '2018-04-03 03:48:00'
+        ]);
+    }
+
+
+    /**
+     * @group acceptance
+     * @group maps
+     * @test
+     */
+    public function it_must_be_able_to_update_a_location_type_with_an_image()
+    {
+        $type = create(LocationType::class);
+        $this->post['image'] = UploadedFile::fake()->image('test.png');
+        $this->signInAdmin()
+            ->json('post', route('admin.location.type.update', [$type->id]), $this->post)
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'success' => 'A location type has been updated'
+            ]);
+        $this->assertDatabaseHas('location_types', [
+            'name' => 'berry',
+            'image_id' => 2
         ]);
     }
 }
