@@ -46,6 +46,16 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::get('/search/{search}', 'LocationController@search')->name('search');
     Route::get('{location}/show', 'LocationController@show')->name('show');
 
+    Route::group(['prefix' => 'feedback', 'as' => 'feedback.', 'middleware' => ['Auth:api']], function(){
+        Route::post('{location}', 'LocationFeedbackController@store')->name('store');
+        Route::put('{feedback}/edit', 'LocationFeedbackController@update')
+            ->middleware('user.owns.feedback')
+            ->name('update');
+        Route::delete('{feedback}', 'LocationFeedbackController@destroy')
+            ->middleware('user.owns.feedback')
+            ->name('delete');
+    });
+
     /**
      * Displays Location Type Information
      */

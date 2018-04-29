@@ -13,7 +13,8 @@ class LocationTypeEncylopediaTest extends TestCase
     use RefreshDatabase;
 
     protected $post = [
-        'path' => 'https://en.wikipedia.org/wiki/Main_Page'
+        'name' => 'wikipedia',
+        'link' => 'https://en.wikipedia.org/wiki/Main_Page'
     ];
 
     /**
@@ -48,7 +49,7 @@ class LocationTypeEncylopediaTest extends TestCase
     public function an_admin_can_remove_an_encyclopedia_to_a_location_type()
     {
         $type = create(LocationType::class);
-        $type->addLink('https://en.wikipedia.org/wiki/Main_Page');
+        $type->addLink('https://en.wikipedia.org/wiki/Main_Page', 'wiki');
         $encyclopedia = Encyclopedia::first();
         $route =  route('admin.location.type.encyclopedia.remove');
 

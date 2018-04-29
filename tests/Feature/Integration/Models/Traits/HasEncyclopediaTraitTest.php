@@ -31,6 +31,7 @@ class HasEncyclopediaTraitTest extends TestCase
     public function a_model_with_an_has_encyclopedia_trait_must_have_an_reference_in_the_db()
     {
         $this->model->encyclopedia()->create([
+            'name' => 'wiki',
             'path' => 'random info'
         ]);
         $this->assertCount(1, $this->model->encyclopedia);
@@ -44,7 +45,7 @@ class HasEncyclopediaTraitTest extends TestCase
      */
     public function a_model_with_an_has_encyclopedia_trait_can_add_a_link()
     {
-        $this->model->addLink('some_random_link');
+        $this->model->addLink('some_random_link', 'wiki');
         $link = Encyclopedia::first();
         $this->assertEquals('some_random_link', $link->path);
         $this->assertEquals($this->model->id, $link->encyclopedia_id);
@@ -58,7 +59,7 @@ class HasEncyclopediaTraitTest extends TestCase
      */
     public function a_model_with_an_has_encyclopedia_trait_can_check_if_relationship_exists()
     {
-        $this->model->addLink('some_random_link');
+        $this->model->addLink('some_random_link', 'wiki');
         $link = Encyclopedia::first();
         $this->assertTrue($this->model->hasLinkTo($link));
 

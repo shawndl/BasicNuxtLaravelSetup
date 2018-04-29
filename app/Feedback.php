@@ -9,13 +9,15 @@ class Feedback extends Model
 {
     use HasUserTrait;
 
+    protected $fillable = [
+        'user_id', 'comment', 'review'
+    ];
+
     /**
-     * feedback has a location
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
     public function location()
     {
-        return $this->belongsTo(Location::class);
+        return $this->morphTo();
     }
 }

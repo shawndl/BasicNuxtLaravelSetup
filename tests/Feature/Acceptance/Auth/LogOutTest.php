@@ -2,10 +2,12 @@
 
 namespace Tests\Feature\Acceptance\Auth;
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogOutTest extends TestCase
 {
@@ -17,10 +19,13 @@ class LogOutTest extends TestCase
      */
     public function it_must_be_able_to_log_the_user_out()
     {
-        $this->signIn();
-        $this->assertTrue(Auth::check());
+        $user = create(User::class);
 
-        $this->json('post', route('logout'))
+        $this->signIn($user)
+            ->withHeaders([
+                'Authorization' => 'Bearer ' . JWTAuth::fromUser($user)
+            ])
+            ->json('post', route('logout'))
             ->assertStatus(200)
             ->assertJson(['message' => 'You are logged out!']);
         $this->assertFalse(Auth::check());

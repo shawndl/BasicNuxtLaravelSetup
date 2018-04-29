@@ -15,20 +15,15 @@ class CreateFeedbackTable extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id')->index();
-            $table->unsignedInteger('location_id')->index();
+            $table->unsignedInteger('user_id');
+            $table->timestamps();
+            $table->morphs('feedback');
             $table->integer('review');
             $table->string('comment');
-            $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->cascade('delete');
-
-            $table->foreign('location_id')
-                ->references('id')
-                ->on('locations')
                 ->cascade('delete');
         });
     }

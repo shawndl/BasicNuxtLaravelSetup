@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LogoutController extends Controller
 {
@@ -22,7 +23,6 @@ class LogoutController extends Controller
         try {
             auth()->logout();
         } catch (\Exception $exception) {
-            // dd($exception->getMessage(), $exception->getLine(), $exception->getFile());
             return $this->processingError($exception);
         }
 

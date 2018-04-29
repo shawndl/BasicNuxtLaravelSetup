@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Location;
 
+use App\Encyclopedia;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class LocationTypeResource extends JsonResource
@@ -28,8 +29,9 @@ class LocationTypeResource extends JsonResource
             'image' => $this->when(isset($image->id), function() use ($image) {
                 return $image->path;
             }),
-            'encyclopedia' => $this->when($encyclopedia->count() > 0, function() use ($encyclopedia) {
-                return EncylopediaResource::collection(($encyclopedia));
+            'encyclopedia' => $this->when(($encyclopedia instanceof Encyclopedia && $encyclopedia->count() > 0),
+                function() use ($encyclopedia) {
+                    return EncylopediaResource::collection(($encyclopedia));
             })
         ];
     }

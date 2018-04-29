@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'confirmation_token.expired' => \App\Http\Middleware\Auth\ChecksExpiredConfirmationToken::class,
-        'user.confirmed' => \App\Http\Middleware\Auth\UserMustBeActive::class
+        'user.confirmed' => \App\Http\Middleware\Auth\UserMustBeActive::class,
+        'user.owns.feedback' => \App\Http\Middleware\Maps\FeedBackMustBelongToUser::class
     ];
 }

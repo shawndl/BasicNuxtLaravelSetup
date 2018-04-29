@@ -23,3 +23,26 @@ $factory->define(App\Location::class, function (Faker $faker) {
         'longitude' => $faker->longitude
     ];
 });
+
+
+$factory->state(App\Location::class, 'no-image', function (Faker $faker) {
+    return [
+        'user_id' => function() use ($faker) {
+            if(\App\User::count() > 0) {
+                return $faker->randomElement(\App\User::pluck('id')->toArray());
+            }
+            return factory(\App\User::class)->create()->id;
+        },
+        'location_type_id' => function() use ($faker) {
+            if(\App\LocationType::count() > 0) {
+                return $faker->randomElement(\App\LocationType::pluck('id')->toArray());
+            }
+            return factory(\App\LocationType::class)->create()->id;
+        },
+        'image_id' => null,
+        'name' => $faker->word,
+        'description' => $faker->paragraph,
+        'latitude' => $faker->latitude,
+        'longitude' => $faker->longitude
+    ];
+});

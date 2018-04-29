@@ -10,12 +10,13 @@ $factory->define(App\Feedback::class, function (Faker $faker) {
             }
             return factory(\App\User::class)->create()->id;
         },
-        'location_id' => function() use ($faker) {
+        'feedback_id' => function() use ($faker) {
             if(\App\Location::count() > 0) {
                 return $faker->randomElement(\App\Location::pluck('id')->toArray());
             }
             return factory(\App\Location::class)->create()->id;
         },
+        'feedback_type' => 'location',
         'comment' => $faker->paragraph,
         'review' => rand(1, 5),
     ];

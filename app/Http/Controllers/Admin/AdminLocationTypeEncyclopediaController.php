@@ -13,6 +13,14 @@ use App\Http\Controllers\Controller;
 class AdminLocationTypeEncyclopediaController extends Controller
 {
     use JsonResponseTrait;
+
+    /**
+     * adds a link to the type
+     *
+     * @param LocationType $locationType
+     * @param AddEncyclopediaRequest $request
+     * @return $this|\Illuminate\Http\JsonResponse
+     */
     public function add(LocationType $locationType, AddEncyclopediaRequest $request)
     {
         try {
@@ -27,6 +35,14 @@ class AdminLocationTypeEncyclopediaController extends Controller
             ]);
     }
 
+    /**
+     * removes a link from a location type
+     *
+     * @param RemoveEncyclopediaRequest $request
+     * @param LocationType $type
+     * @param Encyclopedia $encyclopedia
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function remove(RemoveEncyclopediaRequest $request, LocationType $type, Encyclopedia $encyclopedia)
     {
 
