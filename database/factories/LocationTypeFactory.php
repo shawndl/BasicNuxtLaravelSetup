@@ -15,6 +15,7 @@ $factory->define(App\LocationType::class, function (Faker $faker) {
         'image_id' => factory(\App\Image::class)->states('rectangle')->create()->id,
         'season_start' => $faker->date(),
         'season_finish' => $faker->date(),
-        'icon' => $faker->randomElement($icons)
+        'icon' => $defaultIcon = config('app.url') . 'storage/icons/default-map-icon.png'
+//        'icon' => null //$faker->randomElement($icons)
     ];
 });

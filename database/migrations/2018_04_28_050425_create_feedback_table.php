@@ -19,7 +19,7 @@ class CreateFeedbackTable extends Migration
             $table->timestamps();
             $table->morphs('feedback');
             $table->integer('review');
-            $table->string('comment');
+            $table->text('comment');
 
             $table->foreign('user_id')
                 ->references('id')

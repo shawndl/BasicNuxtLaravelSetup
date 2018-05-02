@@ -23,7 +23,8 @@ class LocationResource extends JsonResource
             'longitude' => $this->longitude,
             'image' => new ImageResource($this->whenLoaded('image')),
             'user' => new LocationUser($this->whenLoaded('user')),
-            'type' => new LocationTypeResource($this->whenLoaded('type'))
+            'type' => new LocationTypeResource($this->whenLoaded('type')),
+            'feedback' => LocationFeedBackResource::collection($this->whenLoaded('feedback'))
         ];
     }
 }

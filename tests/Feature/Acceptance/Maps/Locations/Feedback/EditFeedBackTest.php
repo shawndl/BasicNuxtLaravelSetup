@@ -89,7 +89,11 @@ class EditFeedBackTest extends TestCase
                 'success' => 'You updated feedback to a location!',
                 'data' => [
                     'review'=> 3,
-                    'comment' => 'this place is good'
+                    'comment' => 'this place is good',
+                    'user' => [
+                        'id' => $this->user->id,
+                        'username' => $this->user->name
+                    ]
                 ]
             ]);
 

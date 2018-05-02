@@ -25,6 +25,7 @@ class LocationFeedbackController extends Controller
     {
         try {
             $feedback = $location->review(auth()->user(), $request->review, $request->comment);
+            $feedback->load('user');
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
@@ -50,6 +51,7 @@ class LocationFeedbackController extends Controller
                 'review' => $request->review,
                 'comment' => $request->comment
             ]);
+            $feedback->load('user');
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }

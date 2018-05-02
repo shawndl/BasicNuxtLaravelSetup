@@ -11,6 +11,14 @@ class LocationTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\Location::class, 100)->create();
+        factory(\App\Location::class, 100)
+            ->create()
+            ->each(function ($location) {
+                factory(\App\Feedback::class, 5)
+                    ->create([
+                        'feedback_id' => $location,
+                        'feedback_type' => 'App\Location'
+                    ]);
+            });
     }
 }

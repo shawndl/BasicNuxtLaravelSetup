@@ -15,6 +15,7 @@ class LocationFeedBackResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'user' => new LocationUser($this->whenLoaded('user')),
             'comment' => $this->comment,
             'review' =>$this->review
         ];

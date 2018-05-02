@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\ConfirmationToken;
+use App\Location;
 use App\LocationType;
 use App\User;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,9 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
+        Route::bind('location', function ($location) {
+            return Location::with('type.encyclopedia', 'type.image','user', 'image', 'feedback.user')->find($location);
+        });
         Route::model('locationType', LocationType::class);
         Route::bind('confirmation_token', function($token){
             return ConfirmationToken::where('token', $token)->first();

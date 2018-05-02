@@ -3,6 +3,7 @@
 namespace Tests\Feature\Acceptance\Maps\Locations\Feedback;
 
 use App\Location;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,14 +57,19 @@ class AddFeedBackTest extends TestCase
      */
     public function a_user_must_be_able_to_add_feedback_to_a_location()
     {
-        $this->signIn()
+        $user = create(User::class);
+        $this->signIn($user)
             ->json('post', $this->route, $this->post)
             ->assertStatus(201)
             ->assertJson([
                 'success' => 'You added feedback to a location!',
                 'data' => [
                     'review'=> 3,
-                    'comment' => 'this place is good'
+                    'comment' => 'this place is good',
+                    'user' => [
+                        'id' => $user->id,
+                        'username' => $user->name
+                    ]
                 ]
             ]);
         $this->assertDatabaseHas('feedback', [

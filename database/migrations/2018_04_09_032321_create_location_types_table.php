@@ -13,13 +13,14 @@ class CreateLocationTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('location_types', function (Blueprint $table) {
+        $defaultIcon = config('app.url') . 'public/storage/icon/default-map-icon.png';
+        Schema::create('location_types', function (Blueprint $table) use ($defaultIcon) {
             $table->increments('id');
             $table->string('name')->index();
             $table->text('description');
             $table->date('season_start');
             $table->date('season_finish');
-            $table->string('icon')->default('https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png');
+            $table->string('icon')->default($defaultIcon);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -23,12 +23,17 @@ class LocationController extends Controller
     public function index(Location $locations)
     {
         try {
-            $locations = $locations->with('type.encyclopedia', 'user', 'image')->get();
+            $locations = $locations->with('type.encyclopedia', 'user', 'image', 'feedback.user')->get();
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
 
         return LocationResource::collection($locations);
+    }
+
+    public function show(Location $location)
+    {
+        return new LocationResource($location);
     }
 
     /**
