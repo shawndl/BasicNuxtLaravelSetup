@@ -28,11 +28,8 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
         ->middleware(['confirmation_token.expired', 'guest.api'])
         ->name('activate');
 
-    Route::get('login/{service}', 'SocialLoginController@redirect')
-        ->name('login.social');
-
-    Route::get('login/{service}/callback', 'SocialLoginController@callback')
-        ->name('login.callback');
+    Route::post('login/oauth', 'SocialLoginController@login')
+        ->name('login.oauth');
 });
 
 

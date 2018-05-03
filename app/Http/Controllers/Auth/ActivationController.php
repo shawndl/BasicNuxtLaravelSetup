@@ -29,7 +29,6 @@ class ActivationController extends Controller
             $user->is_active = true;
             $user->save();
             $token = JWTAuth::fromUser($user);
-            //$token->delete();
         } catch (\Exception $exception) {
             if($exception->getMessage() !== 'Creating default object from empty value')
             {

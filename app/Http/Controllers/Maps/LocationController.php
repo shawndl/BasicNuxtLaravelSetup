@@ -31,6 +31,12 @@ class LocationController extends Controller
         return LocationResource::collection($locations);
     }
 
+    /**
+     * gets information about a single resource
+     *
+     * @param Location $location
+     * @return LocationResource
+     */
     public function show(Location $location)
     {
         return new LocationResource($location);

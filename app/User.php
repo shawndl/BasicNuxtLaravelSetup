@@ -20,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'is_active'
     ];
 
     /**
@@ -91,5 +91,26 @@ class User extends Authenticatable implements JWTSubject
     public function token()
     {
         return $this->hasMany(ConfirmationToken::class);
+    }
+
+    /**
+     * a user can have many social logins
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function social()
+    {
+        return $this->hasMany(UserSocial::class);
+    }
+
+    /**
+     * does the user have this soical account
+     *
+     * @param string $service
+     * @return boolean
+     */
+    public function hasSocialLink(string $service)
+    {
+        return (bool)$this->social->where('service', $service)->count();
     }
 }
