@@ -13,7 +13,6 @@ class CreateLocationSuccessTest extends TestCase
 {
     use RefreshDatabase;
     protected $post = [
-        'name' => 'Blue Berry Bush',
         'description' => 'A description',
         'latitude' => '-20.385825381874263',
         'longitude' => '-20.385825381874263'
@@ -41,7 +40,7 @@ class CreateLocationSuccessTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('locations', [
-            'name' => 'blue berry bush'
+            'latitude' => '-20.385825381874263'
         ]);
     }
 }

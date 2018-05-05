@@ -31,60 +31,6 @@ class CreateLocationFailValidationTest extends TestCase
      * @group acceptance
      * @group maps
      */
-    public function a_location_must_have_a_name()
-    {
-        $this->post['name'] = '';
-        $this->sendRequest()->assertJson([
-            "message" => "The given data was invalid.",
-            "errors" => [
-                "name" => [
-                    0 => "The name field is required."
-                ]
-            ]
-        ]);
-    }
-
-    /**
-     * @test
-     * @group acceptance
-     * @group maps
-     */
-    public function a_location_name_must_be_a_string()
-    {
-        $this->post['name'] = 82908552340983542089;
-        $this->sendRequest()->assertJson([
-            "message" => "The given data was invalid.",
-            "errors" => [
-                "name" => [
-                    0 => "The name must be a string."
-                ]
-            ]
-        ]);
-    }
-
-    /**
-     * @test
-     * @group acceptance
-     * @group maps
-     */
-    public function a_location_name_must_not_exceed_255_characters()
-    {
-        $this->post['name'] = str_random(256);
-        $this->sendRequest()->assertJson([
-            "message" => "The given data was invalid.",
-            "errors" => [
-                "name" => [
-                    0 => "The name may not be greater than 255 characters."
-                ]
-            ]
-        ]);
-    }
-
-    /**
-     * @test
-     * @group acceptance
-     * @group maps
-     */
     public function a_location_must_have_a_type()
     {
         $this->post['type'] = '';

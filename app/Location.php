@@ -13,7 +13,7 @@ class Location extends Model
 {
     use HasNameTrait, HasUserTrait, HasImageTrait, HasFeedbackTrait, HasFavouriteTrait;
 
-    protected $fillable = ['name', 'description', 'latitude', 'longitude', 'user_id', 'image_id', 'location_type_id'];
+    protected $fillable = ['description', 'latitude', 'longitude', 'user_id', 'image_id', 'location_type_id'];
 
     /**
      * a location has a type

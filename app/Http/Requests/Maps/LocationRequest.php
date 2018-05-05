@@ -24,7 +24,6 @@ class LocationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
             'type' => 'required|numeric',
             'description' => 'required|string',
             'latitude' => 'required|numeric',

@@ -61,7 +61,6 @@ class LocationController extends Controller
                 ->create([
                     'user_id' => Auth::id(),
                     'location_type_id' => $post['type'],
-                    'name' => $post['name'],
                     'description' => $post['description'],
                     'latitude' => $post['latitude'],
                     'longitude' => $post['longitude']
