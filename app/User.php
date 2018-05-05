@@ -113,4 +113,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return (bool)$this->social->where('service', $service)->count();
     }
+
+    /**
+     * a user can have many favorites
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class);
+    }
 }
