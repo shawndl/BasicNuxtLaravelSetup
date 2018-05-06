@@ -17,7 +17,6 @@ $factory->define(App\Location::class, function (Faker $faker) {
             return factory(\App\LocationType::class)->create()->id;
         },
         'image_id' => factory(\App\Image::class)->create()->id,
-        'name' => $faker->word,
         'description' => $faker->paragraph,
         'latitude' => $faker->latitude,
         'longitude' => $faker->longitude
@@ -40,7 +39,6 @@ $factory->state(App\Location::class, 'no-image', function (Faker $faker) {
             return factory(\App\LocationType::class)->create()->id;
         },
         'image_id' => null,
-        'name' => $faker->word,
         'description' => $faker->paragraph,
         'latitude' => $faker->latitude,
         'longitude' => $faker->longitude

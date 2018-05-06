@@ -4,7 +4,7 @@ namespace App\Http\Requests\Maps;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class LocationRequest extends FormRequest
+class LocationFavouriteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class LocationRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|numeric',
-            'description' => 'required|string',
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
-            'image' => 'required|image'
+            'location' => 'required|numeric'
         ];
     }
 }

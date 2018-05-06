@@ -53,6 +53,11 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
             ->name('delete');
     });
 
+    Route::group(['prefix' => 'favourite', 'as' => 'favourite.', 'middleware' => ['Auth:api']], function(){
+        Route::get('', 'LocationFavouriteController@index')->name('index');
+        Route::post('', 'LocationFavouriteController@store')->name('store');
+    });
+
     /**
      * Displays Location Type Information
      */

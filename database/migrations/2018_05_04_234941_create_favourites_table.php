@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLocationsTable extends Migration
+class CreateFavouritesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,11 @@ class CreateLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('locations', function (Blueprint $table) {
+        Schema::create('favourites', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('location_type_id')->index();
-            $table->unsignedInteger('user_id')->index();
-            $table->text('description');
-            $table->string('latitude');
-            $table->string('longitude');
+            $table->unsignedInteger('user_id');
             $table->timestamps();
-
-            $table->foreign('location_type_id')
-                ->references('id')
-                ->on('location_types')
-                ->cascade('delete');
+            $table->morphs('favourite');
 
             $table->foreign('user_id')
                 ->references('id')
@@ -41,6 +33,6 @@ class CreateLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('locations');
+        Schema::dropIfExists('favourites');
     }
 }
