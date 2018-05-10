@@ -23,9 +23,9 @@ class LocationTypeResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'start' => $this->season_start,
-            'start_format' => $this->season_start->format('jS M'),
+            'start_format' => $this->season_start->format('F'),
             'end' => $this->season_finish,
-            'end_format' => $this->season_finish->format('jS M'),
+            'end_format' => $this->season_finish->format('F'),
             'icon' => $this->icon,
             'image' => $this->when(isset($image->id), function() use ($image) {
                 return $image->path;
