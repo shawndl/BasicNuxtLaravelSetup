@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Maps;
 
 use App\Feedback;
+use App\Http\Requests\Maps\FeedBackRequest;
 use App\Http\Resources\Location\LocationFeedBackResource;
 use App\Location;
 use App\Traits\Controllers\JsonResponseTrait;
@@ -18,10 +19,10 @@ class LocationFeedbackController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Location $location
-     * @param  \Illuminate\Http\Request $request
+     * @param  FeedBackRequest $request
      * @return \Illuminate\Http\JsonResponse | LocationFeedBackResource
      */
-    public function store(Location $location, Request $request)
+    public function store(Location $location, FeedBackRequest $request)
     {
         try {
             $feedback = $location->review(auth()->user(), $request->review, $request->comment);

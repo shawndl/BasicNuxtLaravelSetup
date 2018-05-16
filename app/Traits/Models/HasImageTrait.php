@@ -33,4 +33,15 @@ trait HasImageTrait
         return $this->image->path;
     }
 
+    /**
+     * gets the path to the storage file
+     *
+     * @return string
+     */
+    public function imageFile()
+    {
+        $file = substr($this->path(), strrpos($this->path(), '/') + 1);
+        return storage_path() . '/app/public/' . $file;
+    }
+
 }

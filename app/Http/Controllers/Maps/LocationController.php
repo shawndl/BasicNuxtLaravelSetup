@@ -6,6 +6,7 @@ use App\Http\Requests\Maps\LocationRequest;
 use App\Http\Resources\Location\LocationResource;
 use App\Image;
 use App\Location;
+use App\Services\Image\ImageServiceInterface;
 use App\Traits\Controllers\JsonResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,6 +16,21 @@ use Illuminate\Support\Facades\Auth;
 class LocationController extends Controller
 {
     use JsonResponseTrait;
+
+    /**
+     * @var ImageServiceInterface
+     */
+    protected $imageService;
+
+    /**
+     * LocationController constructor.
+     * @param ImageServiceInterface $imageService
+     */
+    public function __construct(ImageServiceInterface $imageService)
+    {
+        $this->imageService = $imageService;
+    }
+
 
     /**
      * @param Location $locations
@@ -54,6 +70,14 @@ class LocationController extends Controller
     {
         $post = $request->all();
         try {
+            $tempPath = $request->file('image')->path();
+            $this->imageService
+                ->set($tempPath)
+                ->cropSquare()
+                ->resize(200, 200)
+                ->save();
+
+
             $path = $request->file('image')->store('public');
             $location = $image->create([
                 'path' => $path

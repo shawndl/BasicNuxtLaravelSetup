@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Image\ImageInterventionService;
+use App\Services\Image\ImageServiceInterface;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+        // Schema::defaultStringLength(191);
     }
 
     /**
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            ImageServiceInterface::class, ImageInterventionService::class
+        );
     }
 }
