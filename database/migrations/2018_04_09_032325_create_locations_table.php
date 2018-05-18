@@ -18,6 +18,7 @@ class CreateLocationsTable extends Migration
             $table->unsignedInteger('location_type_id')->index();
             $table->unsignedInteger('user_id')->index();
             $table->text('description');
+            $table->boolean('is_private')->default(false);
             $table->string('latitude');
             $table->string('longitude');
             $table->timestamps();

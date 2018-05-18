@@ -45,7 +45,7 @@ class UpdateLocationTypesTest extends TestCase
                         'timezone_type' => 3,
                         'timezone' => 'UTC'
                     ],
-                    'start_format' => '3rd Apr',
+                    'start_format' => 'April',
                     'end' => [
                         'date' => '2018-04-11 03:48:00.000000',
                         'timezone_type' => 3,

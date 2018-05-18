@@ -17,7 +17,8 @@ class CreateLocationSuccessTest extends TestCase
     protected $post = [
         'description' => 'A description',
         'latitude' => '-20.385825381874263',
-        'longitude' => '-20.385825381874263'
+        'longitude' => '-20.385825381874263',
+        'private' => false
     ];
 
     /**

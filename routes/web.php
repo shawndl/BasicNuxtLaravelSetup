@@ -2,8 +2,11 @@
 
 
 Route::get('/', function() {
+    $location = \App\Location::limit(10)->get();
+    $user = \App\User::find(21);
 
-//    return \Laravel\Socialite\Facades\Socialite::driver('github')
-//        ->stateless()
-//        ->redirect()->getTargetUrl();
+    foreach ($location as $l)
+    {
+        $l->addFavourite($user);
+    }
 });

@@ -39,7 +39,7 @@ class LocationController extends Controller
     public function index(Location $locations)
     {
         try {
-            $locations = $locations->with('type.encyclopedia', 'user', 'image', 'feedback.user')->get();
+            $locations = $locations->isPublic()->with('type.encyclopedia', 'user', 'image', 'feedback.user')->get();
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
@@ -87,7 +87,8 @@ class LocationController extends Controller
                     'location_type_id' => $post['type'],
                     'description' => $post['description'],
                     'latitude' => $post['latitude'],
-                    'longitude' => $post['longitude']
+                    'longitude' => $post['longitude'],
+                    'is_private'=> $post['private']
                 ]);
         } catch (\Exception $exception) {
             return $this->processingError($exception);

@@ -71,6 +71,8 @@ class ImageInterventionService implements ImageServiceInterface
      */
     public function cropSquare()
     {
+        if($this->isSquare()) return $this;
+
         $this->setCropValues();
         $this->service->crop($this->cropValues['width'], $this->cropValues['height'], $this->cropValues['x'], $this->cropValues['y']);
         return $this;
@@ -121,8 +123,6 @@ class ImageInterventionService implements ImageServiceInterface
      */
     protected function setCropValues()
     {
-        if($this->isSquare()) return;
-
         if($this->isVertical())
         {
             $this->setVertical();

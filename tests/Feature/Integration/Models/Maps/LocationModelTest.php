@@ -79,4 +79,49 @@ class LocationModelTest extends TestCase
 
         $this->assertEquals(2, $location->feedback->count());
     }
+
+    /**
+     * @group integration
+     * @group model
+     * @group auth
+     * @test
+     */
+    public function a_user_can_make_their_location_private()
+    {
+        $this->publicLocationTest();
+
+        $this->assertCount(0, Location::isPublic()->get());
+    }
+
+    /**
+     * @group integration
+     * @group model
+     * @group auth
+     * @test
+     */
+    public function a_user_can_see_their_private_locations()
+    {
+        $this->publicLocationTest(true);
+
+        $this->assertCount(1, Location::isPublic()->get());
+    }
+
+    private function publicLocationTest($belongsTo = false)
+    {
+        $user = create(User::class);
+        $user2 = create(User::class);
+        create(Location::class, [
+            'user_id' => $user->id,
+            'is_private' => 1
+        ]);
+
+        if($belongsTo)
+        {
+            $this->signIn($user);
+            return;
+        }
+        $this->signIn($user2);
+    }
+
+
 }
