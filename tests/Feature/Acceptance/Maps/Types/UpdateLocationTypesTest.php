@@ -5,6 +5,7 @@ namespace Tests\Feature\Acceptance\Maps\Types;
 use App\Image;
 use App\LocationType;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -80,5 +81,25 @@ class UpdateLocationTypesTest extends TestCase
             'name' => 'berry',
             'image_id' => 2
         ]);
+    }
+
+    /**
+     * @group acceptance
+     * @group maps
+     * @test
+     */
+    public function it_must_delete_the_cache_when_a_type_is_updated()
+    {
+        $this->post['image'] = UploadedFile::fake()->image('test.png');
+        $type = create(LocationType::class);
+        $this->json('get', route('location.type.index'))->json();
+
+        $this->assertTrue(Cache::has('query.types.all'));
+
+        $this->signInAdmin()
+            ->json('post', route('admin.location.type.update', [$type]), $this->post);
+
+        $this->assertFalse(Cache::has('query.types.all'));
+
     }
 }

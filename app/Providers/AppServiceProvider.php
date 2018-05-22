@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Location;
+use App\LocationType;
+use App\Observers\LocationsObserver;
+use App\Observers\TypeObserver;
 use App\Services\Image\ImageInterventionService;
 use App\Services\Image\ImageServiceInterface;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Schema::defaultStringLength(191);
+
+        Location::observe(LocationsObserver::class);
+        LocationType::observe(TypeObserver::class);
     }
 
     /**

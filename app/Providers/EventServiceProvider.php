@@ -19,6 +19,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Auth\UserRequestActivationEmail' => [
             'App\Listeners\Auth\SendActivationEmail',
         ],
+        'App\Events\Models\Cache\LocationsChanged' => [
+            'App\Listeners\Models\Cache\RemoveLocationCache'
+        ],
+        'App\Events\Models\Cache\TypeChanged' => [
+            'App\Listeners\Models\Cache\RemoveTypeCache'
+        ]
     ];
 
     /**

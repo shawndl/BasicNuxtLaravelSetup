@@ -38,13 +38,20 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
      * Display location on google maps
      */
     Route::get('', 'LocationController@index')->name('index');
-    Route::post('', 'LocationController@store')->name('store');
-    Route::put('', 'LocationController@update')->name('update');
-    Route::get('/search/{search}', 'LocationController@search')->name('search');
+    Route::post('', 'LocationController@store')
+        ->middleware('Auth:api')
+        ->name('store');
+    Route::put('{location}', 'LocationController@update')
+        ->middleware(['Auth:api', 'user.owns.location'])
+        ->name('update');
+    Route::delete('{location}', 'LocationController@destroy')
+        ->middleware(['Auth:api', 'user.owns.location'])
+        ->name('delete');
     Route::get('{location}/show', 'LocationController@show')->name('show');
 
     Route::group(['prefix' => 'feedback', 'as' => 'feedback.', 'middleware' => ['Auth:api']], function(){
-        Route::post('{location}', 'LocationFeedbackController@store')->name('store');
+        Route::post('{location}', 'LocationFeedbackController@store')
+            ->name('store');
         Route::put('{feedback}/edit', 'LocationFeedbackController@update')
             ->middleware('user.owns.feedback')
             ->name('update');

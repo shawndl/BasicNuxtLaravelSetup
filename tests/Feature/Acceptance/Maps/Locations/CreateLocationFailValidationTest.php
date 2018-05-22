@@ -16,7 +16,8 @@ class CreateLocationFailValidationTest extends TestCase
         'description' => 'A description',
         'latitude' => '-20.385825381874263',
         'longitude' => '-20.385825381874263',
-        'image' => ''
+        'image' => '',
+        'private' => true
     ];
 
     protected function setUp()
@@ -24,6 +25,17 @@ class CreateLocationFailValidationTest extends TestCase
         parent::setUp();
         $this->post['type'] = create(LocationType::class)->id;
         $this->post['image'] = UploadedFile::fake()->image('test.jpg');
+    }
+
+    /**
+     * @test
+     * @group acceptance
+     * @group maps
+     */
+    public function a_user_must_be_logged_in_to_create_a_location()
+    {
+        $this->json('post', route('location.store'), $this->post)
+            ->assertStatus(401);
     }
 
     /**
@@ -179,17 +191,10 @@ class CreateLocationFailValidationTest extends TestCase
      * @group acceptance
      * @group maps
      */
-    public function a_location_must_have_a_image()
+    public function a_location_does_not_have_to_have_an_image()
     {
-        $this->post['image'] = '';
-        $this->sendRequest()->assertJson([
-            "message" => "The given data was invalid.",
-            "errors" => [
-                "image" => [
-                    0 => "The image field is required."
-                ]
-            ]
-        ]);
+        unset($this->post['image']);
+        $this->sendRequest()->assertStatus(201);
     }
 
 
@@ -206,6 +211,42 @@ class CreateLocationFailValidationTest extends TestCase
             "errors" => [
                 "image" => [
                     0 => "The image must be an image."
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     * @group acceptance
+     * @group maps
+     */
+    public function the_private_field_is_required()
+    {
+        $this->post['private'] = null;
+        $this->sendRequest()->assertJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "private" => [
+                    0 => "The private field is required."
+                ]
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     * @group acceptance
+     * @group maps
+     */
+    public function the_private_field_must_be_a_boolean()
+    {
+        $this->post['private'] = 'yes';
+        $this->sendRequest()->assertJson([
+            "message" => "The given data was invalid.",
+            "errors" => [
+                "private" => [
+                    0 => "The private field must be true or false."
                 ]
             ]
         ]);

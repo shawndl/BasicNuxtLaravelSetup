@@ -28,7 +28,7 @@ class LocationRequest extends FormRequest
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'image' => 'required|image',
+            'image' => 'image',
             'private' => 'required|boolean'
         ];
     }

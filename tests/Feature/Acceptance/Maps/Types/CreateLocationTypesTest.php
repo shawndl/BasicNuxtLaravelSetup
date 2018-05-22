@@ -5,6 +5,7 @@ namespace Tests\Feature\Acceptance\Maps\Types;
 use App\Image;
 use App\LocationType;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -63,5 +64,25 @@ class CreateLocationTypesTest extends TestCase
             'icon' => 'http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-8/128/Link-icon.png',
             'season_start' => '2018-04-03 03:48:00'
         ]);
+    }
+
+    /**
+     * @group acceptance
+     * @group maps
+     * @test
+     */
+    public function it_must_delete_the_cache_when_a_type_is_created()
+    {
+        $this->post['image'] = UploadedFile::fake()->image('test.png');
+        create(LocationType::class);
+        $this->json('get', route('location.type.index'))->json();
+
+        $this->assertTrue(Cache::has('query.types.all'));
+
+        $this->signInAdmin()
+            ->json('post', route('admin.location.type.store'), $this->post);
+
+        $this->assertFalse(Cache::has('query.types.all'));
+
     }
 }

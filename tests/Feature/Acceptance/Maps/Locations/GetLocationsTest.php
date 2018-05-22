@@ -6,6 +6,7 @@ use App\Location;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -106,5 +107,16 @@ class GetLocationsTest extends TestCase
                     'feedback'
                 ]
             ]]);
+    }
+
+    /**
+     * @test
+     * @group acceptance
+     * @group maps
+     */
+    public function when_locations_are_retrieved_a_cache_is_created()
+    {
+        $this->signIn()->json('get', route('location.index'));
+        $this->assertTrue(Cache::has('query.locations.all'));
     }
 }

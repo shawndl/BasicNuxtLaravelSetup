@@ -7,6 +7,7 @@ use App\LocationType;
 use App\Traits\Controllers\JsonResponseTrait;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class LocationTypeController extends Controller
 {
@@ -18,7 +19,9 @@ class LocationTypeController extends Controller
     public function index(LocationType $type)
     {
         try {
-            $types = $type->with('image', 'encyclopedia')->get();
+            $types= Cache::remember('query.types.all', 1440, function () use ($type){
+                return  $type->with('image', 'encyclopedia')->get();
+            });
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
