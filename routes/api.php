@@ -89,17 +89,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             ->name('show');
     });
 
-    Route::group(['prefix' => 'location-types', 'as' => 'location.'], function(){
-        Route::post('', 'AdminLocationTypeController@store')
-            ->name('type.store');
-        Route::post('encyclopedia', 'AdminLocationTypeEncyclopediaController@remove')
-            ->name('type.encyclopedia.remove');
-        Route::post('encyclopedia\{locationType}', 'AdminLocationTypeEncyclopediaController@add')
-            ->name('type.encyclopedia.add');
-        Route::post('{locationType}', 'AdminLocationTypeController@update')
-            ->name('type.update');
-        Route::delete('{locationType}', 'AdminLocationTypeController@destroy')
-            ->name('type.delete');
+    Route::group(['prefix' => 'locations', 'as' => 'location.'], function(){
+        Route::get('', 'AdminLocationController@index')
+            ->name('index');
+        Route::group(['prefix' => 'location-types', 'as' => 'type.'], function(){
+            Route::post('', 'AdminLocationTypeController@store')
+                ->name('store');
+            Route::post('encyclopedia', 'AdminLocationTypeEncyclopediaController@remove')
+                ->name('encyclopedia.remove');
+            Route::post('encyclopedia\{locationType}', 'AdminLocationTypeEncyclopediaController@add')
+                ->name('encyclopedia.add');
+            Route::post('{locationType}', 'AdminLocationTypeController@update')
+                ->name('update');
+            Route::delete('{locationType}', 'AdminLocationTypeController@destroy')
+                ->name('delete');
+        });
     });
+
+
 
 });

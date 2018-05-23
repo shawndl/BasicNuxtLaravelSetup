@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        \Illuminate\Support\Facades\Cache::flush();
         $this->call(UserTableSeeder::class);
         $this->call(LocationTypeTableSeeder::class);
         $this->call(LocationTableSeeder::class);

@@ -16,7 +16,6 @@ class LocationTypeResource extends JsonResource
      */
     public function toArray($request)
     {
-        $image = $this->whenLoaded('image');
         $encyclopedia = $this->whenLoaded('encyclopedia');
         return [
             'id' => $this->id,
@@ -27,9 +26,7 @@ class LocationTypeResource extends JsonResource
             'end' => $this->season_finish,
             'end_format' => $this->season_finish->format('F'),
             'icon' => $this->icon,
-            'image' => $this->when(isset($image->id), function() use ($image) {
-                return $image->path;
-            }),
+            'image' => $this->whenLoaded('image'),
             'encyclopedia' => $this->when(($encyclopedia instanceof Collection && $encyclopedia->count() > 0),
                 function() use ($encyclopedia) {
                     return EncylopediaResource::collection(($encyclopedia));

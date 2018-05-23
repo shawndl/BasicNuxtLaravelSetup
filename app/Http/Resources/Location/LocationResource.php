@@ -23,7 +23,10 @@ class LocationResource extends JsonResource
             'image' => new ImageResource($this->whenLoaded('image')),
             'user' => new LocationUser($this->whenLoaded('user')),
             'type' => new LocationTypeResource($this->whenLoaded('type')),
-            'feedback' => LocationFeedBackResource::collection($this->whenLoaded('feedback'))
+            'feedback' => LocationFeedBackResource::collection($this->whenLoaded('feedback')),
+            'feedback_average' => $this->when($this->whenLoaded('feedback'), function() {
+                return $this->feedback->avg('review');
+            })
         ];
     }
 }
