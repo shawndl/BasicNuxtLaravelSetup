@@ -13,6 +13,14 @@ class AdminAccessController extends Controller
 {
     use JsonResponseTrait;
 
+    /**
+     * changes the users admin status
+     *
+     * @param AdminAccessRequest $request
+     * @param User $user
+     * @param Role $role
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(AdminAccessRequest $request, User $user, Role $role)
     {
         try {
@@ -25,6 +33,31 @@ class AdminAccessController extends Controller
             } else {
                 $user->roles()->detach($role);
                 $message = "$user->name is no longer an admin";
+            }
+        } catch (\Exception $exception) {
+            $this->processingError($exception);
+        }
+
+        return $this->successResponse($message);
+    }
+
+    /**
+     * bans or unbans users from the site
+     *
+     * @param AdminAccessRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function banned(AdminAccessRequest $request, User $user)
+    {
+        try {
+            $user = $user->find($request->user_id);
+            $user->banned();
+            if($user->banned)
+            {
+                $message = "$user->name is now banned from the site";
+            } else {
+                $message = "$user->name is no longer banned from the site";
             }
         } catch (\Exception $exception) {
             $this->processingError($exception);

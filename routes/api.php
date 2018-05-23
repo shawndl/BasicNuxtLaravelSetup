@@ -18,7 +18,7 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
        ->middleware(['guest.api'])
        ->name('register');
     Route::post('login', 'LoginController@login')
-        ->middleware(['guest.api', 'user.confirmed'])
+        ->middleware(['guest.api', 'user.confirmed', 'user.banned'])
         ->name('login');
     Route::post('/logout', 'LogoutController@logout')->name('logout');
     Route::get('/me', 'MeController@me')
@@ -81,8 +81,12 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['Auth:api', 'auth.admin']], function(){
     Route::group(['prefix' => 'user', 'as' => 'user.'], function(){
         Route::get('', 'AdminUserController@index')->name('index');
-        Route::post('admin-access', 'AdminAccessController@store')->name('access')->middleware('auth');
-        Route::get('{user}/show', 'AdminUserController@show')->name('show');
+        Route::post('admin-access', 'AdminAccessController@store')
+            ->name('access');
+        Route::post('banned', 'AdminAccessController@banned')
+            ->name('banned');
+        Route::get('{user}/show', 'AdminUserController@show')
+            ->name('show');
     });
 
     Route::group(['prefix' => 'location-types', 'as' => 'location.'], function(){

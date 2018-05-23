@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'confirmation_token.expired' => \App\Http\Middleware\Auth\ChecksExpiredConfirmationToken::class,
         'user.confirmed' => \App\Http\Middleware\Auth\UserMustBeActive::class,
+        'user.banned' => \App\Http\Middleware\Auth\UserCannotBeBanned::class,
         'user.owns.feedback' => \App\Http\Middleware\Maps\FeedBackMustBelongToUser::class,
         'user.owns.location' => \App\Http\Middleware\BelongsTo\LocationBelongToUser::class
     ];

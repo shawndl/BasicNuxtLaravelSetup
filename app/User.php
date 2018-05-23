@@ -70,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function scopeName(Builder $builder, string $value)
     {
-        return $builder->where('name', $value)->first();
+        return $builder->where('name', strtolower($value))->first();
     }
 
     /**
@@ -83,6 +83,20 @@ class User extends Authenticatable implements JWTSubject
     public function scopeEmail(Builder $builder, string $value)
     {
         return $builder->where('email', $value)->first();
+    }
+
+    /**
+     * finds User by email or username
+     *
+     * @param Builder $builder
+     * @param string $value
+     * @return Builder
+     */
+    public function scopeNameEmail(Builder $builder, string $value)
+    {
+        return $builder->where('email', $value)
+            ->orWhere('name', strtolower($value))
+            ->first();
     }
 
     /**
@@ -122,5 +136,26 @@ class User extends Authenticatable implements JWTSubject
     public function favourites()
     {
         return $this->hasMany(Favourite::class);
+    }
+
+    /**
+     * a user can have many locations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function locations()
+    {
+        return $this->hasMany(Location::class);
+    }
+
+    /**
+     * toggles between of the user is banned from the site
+     *
+     * @return void
+     */
+    public function banned()
+    {
+        $this->banned = !$this->banned;
+        $this->save();
     }
 }

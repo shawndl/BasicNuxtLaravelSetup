@@ -18,7 +18,9 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'is_admin' => $this->hasRole('admin')
+            'is_admin' => $this->hasRole('admin'),
+            'number_locations' => $this->locations->count(),
+            'banned' => $this->banned
         ];
     }
 }

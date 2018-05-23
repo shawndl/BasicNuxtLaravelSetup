@@ -6,7 +6,7 @@ use App\Traits\Controllers\JsonResponseTrait;
 use App\User;
 use Closure;
 
-class UserMustBeActive
+class UserCannotBeBanned
 {
     use JsonResponseTrait;
 
@@ -40,9 +40,9 @@ class UserMustBeActive
         }
         $user = $this->user
             ->nameEmail($request->email);
-        if(isset($user->id) && $user->hasNotActivated())
+        if(isset($user->id) && $user->banned)
         {
-            return $this->validationError('Your account is not active, please check your email', 'email');
+            return $this->hasJsonError('Your account has been banned from the site', 403);
         }
 
         return $next($request);

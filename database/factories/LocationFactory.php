@@ -19,8 +19,8 @@ $factory->define(App\Location::class, function (Faker $faker) {
         'image_id' => factory(\App\Image::class)->create()->id,
         'is_private' => $faker->boolean,
         'description' => $faker->paragraph,
-        'latitude' => $faker->latitude(-14.847844, -39.832748),
-        'longitude' => $faker->longitude(112.193750, 135.045313)
+        'latitude' => $faker->latitude(50.708634, 58.539594),
+        'longitude' => $faker->longitude(0.175782, -9.93164)
     ];
 });
 

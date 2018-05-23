@@ -89,17 +89,35 @@ class LoginUserTest extends TestCase
     }
 
     /**
+     * @group acceptance
+     * @group auth
+     * @test
+     */
+    public function it_must_not_allow_a_user_to_log_in_if_they_are_banned()
+    {
+        $this->sendResponse(true, 'secret', true, true)
+            ->assertStatus(403)
+            ->assertJson([
+                'error' => 'Your account has been banned from the site'
+            ]);
+    }
+
+    /**
      * sends login response
      * @param bool $active
      * @param string $password
+     * @param bool $username
+     * @param bool $banned
      * @return TestResponse
      */
-    private function sendResponse($active = true, $password = 'secret', $username = false)
+    private function sendResponse($active = true, $password = 'secret', $username = false, $banned = false)
     {
         $this->user = create(User::class, [
             'is_active' => $active,
-            'password' => bcrypt('secret')
+            'password' => bcrypt('secret'),
+            'banned' => $banned
         ])->toArray();
+
         $this->post['email'] = ($username) ? $this->user['name'] : $this->user['email'];
         $this->post['password'] = $password;
         $this->url = route('login');
