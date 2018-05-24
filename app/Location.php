@@ -59,11 +59,11 @@ class Location extends Model
 
     /**
      * updates a location
-     * @param Image $image
+     * @param Image | false $image
      * @param Request $request
      * @return bool
      */
-    public function edit(Request $request, Image $image)
+    public function edit(Request $request, $image)
     {
         $id = ($image instanceof Image) ? $image->id : $this->image_id;
         return $this

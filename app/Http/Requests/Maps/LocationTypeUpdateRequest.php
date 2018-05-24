@@ -25,6 +25,7 @@ class LocationTypeUpdateRequest extends FormRequest
     public function rules()
     {
         $id = $this->route('locationType')->id;
+
         return [
             'name' => [
                 'required', 'string', Rule::unique('location_types')->ignore($id),

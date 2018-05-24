@@ -41,7 +41,7 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::post('', 'LocationController@store')
         ->middleware('Auth:api')
         ->name('store');
-    Route::put('{location}', 'LocationController@update')
+    Route::post('{location}', 'LocationController@update')
         ->middleware(['Auth:api', 'user.owns.location'])
         ->name('update');
     Route::delete('{location}', 'LocationController@destroy')

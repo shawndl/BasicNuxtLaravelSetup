@@ -15,6 +15,8 @@ class LocationBelongToUser
      */
     public function handle($request, Closure $next)
     {
+        if(auth()->user()->hasRole('admin')) return $next($request);
+
         if(intval($request->route('location')->user_id) !== intval(auth()->id()))
         {
             abort(401);
