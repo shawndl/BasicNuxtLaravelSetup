@@ -44,7 +44,7 @@ class GetUsesFavouritesTest extends TestCase
      */
     public function a_user_must_be_able_to_get_all_their_favourites()
     {
-        $route = route('location.favourite.index');
+        $route = route('profile.favourite.index');
 
         $this->signIn($this->user)
             ->json('get', $route)

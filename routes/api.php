@@ -60,11 +60,6 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
             ->name('delete');
     });
 
-    Route::group(['prefix' => 'favourite', 'as' => 'favourite.', 'middleware' => ['Auth:api']], function(){
-        Route::get('', 'LocationFavouriteController@index')->name('index');
-        Route::post('', 'LocationFavouriteController@store')->name('store');
-    });
-
     /**
      * Displays Location Type Information
      */
@@ -72,9 +67,15 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::get('types/{locationType}/show', 'LocationTypeController@show')->name('type.show');
 });
 
-Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Profile', 'middleware' => 'Auth:api'], function(){
-    Route::post('', 'ProfileController@store')->name('update');
-    Route::post('password', 'PasswordController@store')->name('password');
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => 'Auth:api'], function(){
+    Route::post('', 'Profile\ProfileController@store')->name('update');
+    Route::post('password', 'Profile\PasswordController@store')->name('password');
+
+
+    Route::group(['prefix' => 'favourite', 'as' => 'favourite.'], function(){
+        Route::get('', 'Maps\LocationFavouriteController@index')->name('index');
+        Route::post('', 'Maps\LocationFavouriteController@store')->name('store');
+    });
 });
 
 

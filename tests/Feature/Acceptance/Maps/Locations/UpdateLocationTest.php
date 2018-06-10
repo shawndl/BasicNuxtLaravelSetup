@@ -53,7 +53,7 @@ class UpdateLocationTest extends TestCase
         $this->post['image'] = UploadedFile::fake()->image('test.jpg', 800, 1200);
         $this->route = route('location.update', ['location' => $this->location]);
         $this->response = $this->signIn($this->user)
-            ->json('put', $this->route, $this->post);
+            ->json('post', $this->route, $this->post);
     }
 
     /**
@@ -109,7 +109,8 @@ class UpdateLocationTest extends TestCase
         $this->assertTrue(Cache::has('query.locations.all'));
 
         $this->response = $this->signIn($this->user)
-            ->json('put', $this->route, $this->post);
+            ->json('post', $this->route, $this->post);
+
         $this->assertFalse(Cache::has('query.locations.all'));
 
     }

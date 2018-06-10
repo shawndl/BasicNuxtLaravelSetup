@@ -36,7 +36,7 @@ class ToggleFavouritesTest extends TestCase
      */
     public function a_user_must_be_able_to_get_all_their_favourites()
     {
-        $route = route('location.favourite.store');
+        $route = route('profile.favourite.store');
 
         $this->signIn($this->user)
             ->json('post', $route, ['location' => $this->location->id])
@@ -63,7 +63,7 @@ class ToggleFavouritesTest extends TestCase
     public function it_must_be_able_to_remove_a_location_from_the_favourite()
     {
         $this->location->addFavourite($this->user);
-        $route = route('location.favourite.store');
+        $route = route('profile.favourite.store');
         $this->signIn($this->user)
             ->json('post', $route, ['location' => $this->location->id])
             ->assertStatus(201)
