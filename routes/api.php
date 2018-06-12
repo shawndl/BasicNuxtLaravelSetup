@@ -93,6 +93,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::group(['prefix' => 'locations', 'as' => 'location.'], function(){
         Route::get('', 'AdminLocationController@index')
             ->name('index');
+        Route::delete('{location}', 'AdminLocationController@destroy')
+            ->name('delete');
+
         Route::group(['prefix' => 'location-types', 'as' => 'type.'], function(){
             Route::post('', 'AdminLocationTypeController@store')
                 ->name('store');

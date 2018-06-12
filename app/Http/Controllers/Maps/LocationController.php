@@ -56,7 +56,8 @@ class LocationController extends Controller
             $locations= Cache::remember('query.locations.all', 1440, function () use ($locations){
                 return $locations
                     ->isPublic()
-                    ->with('type.encyclopedia', 'user', 'image', 'feedback.user')
+                    ->has('type')
+                    ->with('type.encyclopedia', 'type.image', 'user', 'image', 'feedback.user')
                     ->get();
             });
         } catch (\Exception $exception) {

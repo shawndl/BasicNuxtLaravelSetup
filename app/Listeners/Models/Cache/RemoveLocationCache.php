@@ -18,5 +18,6 @@ class RemoveLocationCache
     public function handle(LocationsChanged $event)
     {
         Cache::forget('query.locations.all');
+        Cache::forget('query.locations.admin.all');
     }
 }
