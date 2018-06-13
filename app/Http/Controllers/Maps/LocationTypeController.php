@@ -14,7 +14,8 @@ class LocationTypeController extends Controller
     use JsonResponseTrait;
 
     /**
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection | JsonResponse
+     * @param LocationType $type
+     * @return JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index(LocationType $type)
     {
@@ -35,6 +36,7 @@ class LocationTypeController extends Controller
      */
     public function show(LocationType $type)
     {
+        $type = $type->load(['image', 'encyclopedia']);
         return new LocationTypeResource($type);
     }
 }

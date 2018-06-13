@@ -51,13 +51,13 @@ class LocationTypeEncylopediaTest extends TestCase
         $type = create(LocationType::class);
         $type->addLink('https://en.wikipedia.org/wiki/Main_Page', 'wiki');
         $encyclopedia = Encyclopedia::first();
-        $route =  route('admin.location.type.encyclopedia.remove');
+        $route =  route('admin.location.type.encyclopedia.remove', ['encyclopedia' => $encyclopedia->id]);
 
         $this->post['type'] = $type->id;
         $this->post['link'] = $encyclopedia->id;
 
         $this->signInAdmin()
-            ->json('post', $route, $this->post)
+            ->json('delete', $route)
             ->assertStatus(201)
             ->assertJson([
                 'success' => 'You removed an encyclopedia link'

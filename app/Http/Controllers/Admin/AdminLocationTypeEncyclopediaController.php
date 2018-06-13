@@ -6,6 +6,7 @@ use App\Encyclopedia;
 use App\Http\Requests\Admin\RemoveEncyclopediaRequest;
 use App\Http\Requests\Maps\AddEncyclopediaRequest;
 use App\Http\Resources\Location\EncylopediaResource;
+use App\Http\Resources\Location\LocationTypeResource;
 use App\LocationType;
 use App\Traits\Controllers\JsonResponseTrait;
 use App\Http\Controllers\Controller;
@@ -24,12 +25,13 @@ class AdminLocationTypeEncyclopediaController extends Controller
     public function add(LocationType $locationType, AddEncyclopediaRequest $request)
     {
         try {
-            $link = $locationType->addLink($request->link, $request->name);
+            $link = $locationType->addLink($request->path, $request->name);
+            $locationType = $locationType->load('encyclopedia', 'image');
         } catch (\Exception $exception) {
             return $this->processingError($exception);
         }
 
-        return (new EncylopediaResource($link))
+        return (new LocationTypeResource($locationType))
             ->additional([
                 'success' => 'You added a reference to a location type'
             ]);
@@ -39,20 +41,13 @@ class AdminLocationTypeEncyclopediaController extends Controller
      * removes a link from a location type
      *
      * @param RemoveEncyclopediaRequest $request
-     * @param LocationType $type
      * @param Encyclopedia $encyclopedia
      * @return \Illuminate\Http\JsonResponse
      */
-    public function remove(RemoveEncyclopediaRequest $request, LocationType $type, Encyclopedia $encyclopedia)
+    public function remove(RemoveEncyclopediaRequest $request, Encyclopedia $encyclopedia)
     {
 
         try {
-            $type = $type->find($request->type);
-            $encyclopedia = $encyclopedia->find($request->link);
-            if(!$type->hasLinkTo($encyclopedia))
-            {
-                abort(422);
-            }
             $encyclopedia->delete();
         } catch (\Exception $exception) {
             return $this->processingError($exception);

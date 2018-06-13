@@ -37,7 +37,8 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     /**
      * Display location on google maps
      */
-    Route::get('', 'LocationController@index')->name('index');
+    Route::get('', 'LocationController@index')
+        ->name('index');
     Route::post('', 'LocationController@store')
         ->middleware('Auth:api')
         ->name('store');
@@ -47,7 +48,8 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     Route::delete('{location}', 'LocationController@destroy')
         ->middleware(['Auth:api', 'user.owns.location'])
         ->name('delete');
-    Route::get('{location}/show', 'LocationController@show')->name('show');
+    Route::get('{location}', 'LocationController@show')
+        ->name('show');
 
     Route::group(['prefix' => 'feedback', 'as' => 'feedback.', 'middleware' => ['Auth:api']], function(){
         Route::post('{location}', 'LocationFeedbackController@store')
@@ -63,8 +65,10 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
     /**
      * Displays Location Type Information
      */
-    Route::get('types/', 'LocationTypeController@index')->name('type.index');
-    Route::get('types/{locationType}/show', 'LocationTypeController@show')->name('type.show');
+    Route::get('types', 'LocationTypeController@index')
+        ->name('type.index');
+    Route::get('types/{locationType}/show', 'LocationTypeController@show')
+        ->name('type.show');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => 'Auth:api'], function(){
@@ -99,17 +103,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::group(['prefix' => 'location-types', 'as' => 'type.'], function(){
             Route::post('', 'AdminLocationTypeController@store')
                 ->name('store');
-            Route::post('encyclopedia', 'AdminLocationTypeEncyclopediaController@remove')
-                ->name('encyclopedia.remove');
-            Route::post('encyclopedia\{locationType}', 'AdminLocationTypeEncyclopediaController@add')
+            Route::post('encyclopedia/{locationType}', 'AdminLocationTypeEncyclopediaController@add')
                 ->name('encyclopedia.add');
+            Route::delete('encyclopedia/{encyclopedia}', 'AdminLocationTypeEncyclopediaController@remove')
+                ->name('encyclopedia.remove');
             Route::post('{locationType}', 'AdminLocationTypeController@update')
                 ->name('update');
             Route::delete('{locationType}', 'AdminLocationTypeController@destroy')
                 ->name('delete');
         });
     });
-
-
-
 });

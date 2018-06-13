@@ -29,9 +29,14 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
         Route::bind('location', function ($location) {
-            return Location::with('type.encyclopedia', 'type.image','user', 'image', 'feedback.user')->find($location);
+            $location = Location::with('type.encyclopedia', 'type.image','user', 'image', 'feedback.user')
+                ->find($location);
+            if(is_null($location)) return Location::first();
+            return $location;
         });
+
         Route::model('locationType', LocationType::class);
+
         Route::bind('confirmation_token', function($token){
             return ConfirmationToken::where('token', $token)->first();
         });
