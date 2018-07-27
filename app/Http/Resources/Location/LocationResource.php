@@ -17,9 +17,11 @@ class LocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'created' => $this->created_at->diffForHumans(),
             'description' => $this->description,
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
+            'is_private' => $this->is_private,
             'image' => new ImageResource($this->whenLoaded('image')),
             'user' => new LocationUser($this->whenLoaded('user')),
             'type' => new LocationTypeResource($this->whenLoaded('type')),

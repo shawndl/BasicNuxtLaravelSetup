@@ -35,6 +35,25 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function(){
 
 Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'], function(){
     /**
+     * Displays Location Type Information
+     */
+    Route::get('types', 'LocationTypeController@index')
+        ->name('type.index');
+    Route::get('types/{locationType}/show', 'LocationTypeController@show')
+        ->name('type.show');
+
+    Route::group(['prefix' => 'feedback', 'as' => 'feedback.', 'middleware' => ['Auth:api']], function(){
+        Route::post('{location}', 'LocationFeedbackController@store')
+            ->name('store');
+        Route::put('{feedback}/edit', 'LocationFeedbackController@update')
+            ->middleware('user.owns.feedback')
+            ->name('update');
+        Route::delete('{feedback}', 'LocationFeedbackController@destroy')
+            ->middleware('user.owns.feedback')
+            ->name('delete');
+    });
+
+    /**
      * Display location on google maps
      */
     Route::get('', 'LocationController@index')
@@ -50,31 +69,14 @@ Route::group(['prefix' => 'location', 'as' => 'location.', 'namespace' => 'Maps'
         ->name('delete');
     Route::get('{location}', 'LocationController@show')
         ->name('show');
-
-    Route::group(['prefix' => 'feedback', 'as' => 'feedback.', 'middleware' => ['Auth:api']], function(){
-        Route::post('{location}', 'LocationFeedbackController@store')
-            ->name('store');
-        Route::put('{feedback}/edit', 'LocationFeedbackController@update')
-            ->middleware('user.owns.feedback')
-            ->name('update');
-        Route::delete('{feedback}', 'LocationFeedbackController@destroy')
-            ->middleware('user.owns.feedback')
-            ->name('delete');
-    });
-
-    /**
-     * Displays Location Type Information
-     */
-    Route::get('types', 'LocationTypeController@index')
-        ->name('type.index');
-    Route::get('types/{locationType}/show', 'LocationTypeController@show')
-        ->name('type.show');
 });
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => 'Auth:api'], function(){
     Route::post('', 'Profile\ProfileController@store')->name('update');
     Route::post('password', 'Profile\PasswordController@store')->name('password');
 
+    Route::get('locations', 'Profile\MyLocationController@index')
+        ->name('location.index');
 
     Route::group(['prefix' => 'favourite', 'as' => 'favourite.'], function(){
         Route::get('', 'Maps\LocationFavouriteController@index')->name('index');

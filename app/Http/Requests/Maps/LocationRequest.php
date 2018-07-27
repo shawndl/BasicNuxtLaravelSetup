@@ -28,8 +28,15 @@ class LocationRequest extends FormRequest
             'description' => 'required|string',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
-            'image' => 'image',
+            'image' => 'sometimes|image|max:10000',
             'private' => 'required|boolean'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'type.numeric' => 'Please select a type of food'
         ];
     }
 }

@@ -20,7 +20,7 @@ class LocationTypeController extends Controller
     public function index(LocationType $type)
     {
         try {
-            $types= Cache::remember('query.types.all', 1440, function () use ($type){
+            $types = Cache::remember('query.types.all', 1440, function () use ($type){
                 return  $type->with('image', 'encyclopedia')->get();
             });
         } catch (\Exception $exception) {

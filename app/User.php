@@ -23,6 +23,10 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password', 'is_active'
     ];
 
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -32,9 +36,6 @@ class User extends Authenticatable implements JWTSubject
         'password', 'remember_token',
     ];
 
-    protected $dates = [
-        'created_at', 'updated_at'
-    ];
 
     public function getRouteKey()
     {

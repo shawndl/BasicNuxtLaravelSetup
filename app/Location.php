@@ -18,6 +18,10 @@ class Location extends Model
 
     protected $fillable = ['description', 'latitude', 'longitude', 'user_id', 'image_id', 'location_type_id'];
 
+    protected $dates = [
+        'created_at', 'updated_at'
+    ];
+
     /**
      * returns only if the location is private or belongs to the user
      *
