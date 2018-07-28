@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Feedback;
 use App\Location;
 use App\LocationType;
+use App\Observers\FeedbackObserver;
 use App\Observers\LocationsObserver;
 use App\Observers\TypeObserver;
 use App\Services\Image\ImageInterventionService;
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
 
         Location::observe(LocationsObserver::class);
         LocationType::observe(TypeObserver::class);
+        Feedback::observe(FeedbackObserver::class);
     }
 
     /**

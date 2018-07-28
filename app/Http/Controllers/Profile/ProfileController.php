@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\Account\ProfileStoreRequest;
+use App\Http\Resources\Auth\UserResource;
 use App\Traits\Controllers\JsonResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class ProfileController extends Controller
      * updates the index Profile
      *
      * @param ProfileStoreRequest $request
-     * @return JsonResponse
+     * @return UserResource|JsonResponse
      */
     public function store(ProfileStoreRequest $request)
     {
@@ -26,6 +27,9 @@ class ProfileController extends Controller
             return $this->processingError($exception);
         }
 
-        return $this->successResponse('Your Profile has been updated!');
+        return (new UserResource($request->user()))
+            ->additional([
+                'success' => 'Your Profile has been updated!'
+            ]);
     }
 }
